@@ -1,0 +1,294 @@
+<title>ABCash 掘り起こし配信モックアップ｜プチアドバイス</title>
+<style>
+:root{--bg:#eaf3fa;--navy:#26405f;--navy-d:#1d3149;--pink:#cf8f9c;--pink-d:#bd7886;
+--blue:#7fb0d2;--ink:#4a4446;--line:#d6e3ee;--lbg:#8ab4d8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.8;
+font-family:"Yu Gothic",YuGothic,"Hiragino Sans","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+-webkit-text-size-adjust:100%}
+header{background:linear-gradient(160deg,#eaf3fa,#fbeef1);padding:28px 16px 20px;text-align:center;
+border-bottom:1px solid var(--line)}
+h1{font-size:19px;color:var(--navy-d);margin:0 0 6px;font-weight:700;line-height:1.5}
+header p{margin:0;font-size:12.5px;color:#6c7883}
+.tabs{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;padding:14px 12px 6px;
+position:sticky;top:0;background:var(--bg);z-index:20;border-bottom:1px solid var(--line)}
+.tab{border:1.5px solid var(--navy);background:#fff;color:var(--navy);font:inherit;font-size:13px;
+font-weight:700;padding:8px 14px;border-radius:22px;cursor:pointer;line-height:1.3}
+.tab.on{background:var(--navy);color:#fff}
+.tab small{display:block;font-size:10px;font-weight:400;opacity:.85}
+.opt{text-align:center;padding:10px 14px 0;font-size:12.5px;color:#6c7883}
+.opt label{cursor:pointer;user-select:none}
+.stage{max-width:440px;margin:0 auto;padding:14px 12px 80px}
+.intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px;margin:0 1px 16px}
+.ttl{font-size:15.5px;font-weight:700;color:var(--navy-d);margin:0 0 6px}
+.flow{font-size:12.5px;color:#68737e;margin:0;background:#f4f9fc;border-radius:8px;padding:9px 11px;line-height:1.7}
+
+/* 通知プレビュー */
+.push{background:#cfd8e0;border-radius:16px;padding:10px 12px 12px;margin:18px 1px 6px}
+.push .ph{font-size:11px;color:#5b6672;text-align:center;margin:0 0 8px;font-weight:700;letter-spacing:.04em}
+.pnote{display:flex;gap:10px;align-items:flex-start;background:#fff;border-radius:12px;padding:11px 12px;
+box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.pnote .ic{width:34px;height:34px;border-radius:9px;flex:0 0 34px;background:linear-gradient(140deg,#cf8f9c,#7fb0d2);
+display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+.pnote .tx{min-width:0;flex:1}
+.pnote .nm{font-size:12.5px;font-weight:700;color:#1a1a1a;display:flex;justify-content:space-between}
+.pnote .nm span{font-size:10.5px;color:#9aa4ae;font-weight:400}
+.pnote .pv{font-size:12.5px;color:#3a3a3a;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcap{font-size:11px;color:#5b6672;text-align:center;margin:8px 0 0;line-height:1.6}
+.pcap b{color:var(--navy-d)}
+
+.phone{background:var(--lbg);border-radius:24px;padding:0 0 20px;overflow:hidden;
+box-shadow:0 8px 30px rgba(38,64,95,.16);margin-top:6px}
+.bar{background:#2c3e50;color:#fff;padding:10px 15px;font-size:13.5px;font-weight:700;display:flex;
+align-items:center;gap:9px}
+.bar .back{opacity:.6;font-weight:400}
+.bar .cnt{margin-left:auto;font-size:11px;opacity:.6;font-weight:400}
+.chat{padding:13px 11px 0}
+.chip{text-align:center;margin:20px 0 9px}
+.chip span{background:rgba(0,0,0,.3);color:#fff;font-size:11px;padding:4px 12px;border-radius:12px;
+display:inline-block;line-height:1.6}
+.row{display:flex;gap:8px;margin-bottom:5px;align-items:flex-start}
+.av{width:33px;height:33px;border-radius:50%;background:linear-gradient(140deg,#cf8f9c,#7fb0d2);
+flex:0 0 33px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10.5px;font-weight:700}
+.av.gh{visibility:hidden}
+.col{min-width:0;flex:1}
+.nm{font-size:11px;color:rgba(255,255,255,.9);margin:0 0 3px 2px}
+.bub{background:#fff;border-radius:4px 16px 16px 16px;padding:11px 14px;font-size:14px;line-height:1.9;
+white-space:pre-wrap;word-break:break-word;display:inline-block;max-width:100%;color:#2b2b2b}
+.bub .h13{background:#fbeef1;border-radius:4px;padding:0 3px;font-weight:700;color:var(--navy-d)}
+.cta{display:block;margin-top:9px;background:#06c755;color:#fff;text-align:center;font-weight:700;
+font-size:13px;padding:10px;border-radius:9px;text-decoration:none}
+.opts2{margin-top:9px;display:flex;flex-direction:column;gap:6px}
+.opts2 i{font-style:normal;background:#f2f6f9;border:1px solid #dbe6ef;border-radius:9px;
+padding:9px 12px;font-size:13px;color:var(--navy)}
+.stampbox{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.stampbox i{font-style:normal;background:#f2f6f9;border:1px solid #e0e8ee;border-radius:14px;
+padding:4px 11px;font-size:12.5px;color:#4a4446}
+.end{text-align:center;font-size:12px;color:#6c7883;padding:18px 10px 0}
+.legend{background:#fff;border:1px dashed var(--pink);border-radius:12px;padding:12px 15px;margin:14px 1px 0;
+font-size:12px;color:#5b5054;line-height:1.8}
+.legend b{color:var(--pink-d)}
+.pane{display:none}.pane.on{display:block}
+@media(max-width:440px){.stage{padding:10px 8px 60px}.bub{font-size:13.5px}}
+@media(prefers-color-scheme:dark){body{background:#eaf3fa;color:#4a4446}}
+</style>
+
+<header>
+<h1>ABCash 掘り起こし配信<br>「あなただけのプチアドバイス」</h1>
+<p>眠っているリストを、夏のボーナス起点で起こす</p>
+</header>
+
+<div class="tabs">
+<button class="tab on" data-p="b">B案<small>体験会に来た人</small></button>
+<button class="tab" data-p="a">A案<small>来なかった人</small></button>
+</div>
+<p class="opt"><label><input type="checkbox" id="pw" checked> 通知プレビュー（開く前の窓）を表示する</label></p>
+
+<div class="stage">
+
+<!-- ================= B ================= -->
+<div class="pane on" id="pb">
+<div class="intro">
+<p class="ttl">B案｜体験会に来たけれど、決めなかった方へ</p>
+<p class="flow">いちばん濃い見込み客。すでに一度会っている。「あの時ご一緒した方は＋◯円」は、来た方にしか使えない最強のフック。フック → プチアドバイス予約 → 予約後3日ナーチャリング → 当日</p>
+</div>
+<div class="legend"><b>◯円</b>の部分は、ABCash側で実データ（上半期に貯まった平均額）を入れてください。<b>ピンクの下線</b>が、通知の窓に出る冒頭13文字です。</div>
+
+<div class="phone">
+<div class="bar"><span class="back">&lsaquo;</span>ABCash<span class="cnt">掘り起こし</span></div>
+<div class="chat">
+
+<div class="chip"><span>B-1　一斉配信（眠っている方へ）</span></div>
+<div class="row"><div class="av">AB</div><div class="col"><p class="nm">ABCash</p>
+<div class="bub"><span class="h13">〇〇さん、あの後、いくら貯まりましたか？</span>
+
+以前、一度お会いできましたね。
+その節は、ありがとうございました🌷
+
+不躾なお尋ねで、すみません。。
+あの時ご一緒した方の中には、
+上半期だけで ＋◯円、という方もいます。
+
+〇〇さんのことが、ふと気になってご連絡しました。
+もしよければ、"いま、いくら貯められるか"を
+〇〇さんの数字で見る、
+あなただけのプチアドバイス、いかがでしょうか☺️<a class="cta" href="#">プチアドバイスの席をとる</a></div></div></div>
+
+<div class="chip"><span>B-2　予約後1日目（社会的証明）</span></div>
+<div class="row"><div class="av">AB</div><div class="col">
+<div class="bub">〇〇さん、お席のご予約、ありがとうございます🌸
+
+当日までに、ひとつだけお伝えしたいことがあります。
+
+あの時ご一緒した方たちは、
+2026年の上半期だけで、平均 ＋◯円。
+同じ半年で、動いた方とそうでない方の差が、
+静かに開いています。
+
+責めているお話では、まったくありません🌷
+やり方を一度知れば、追いつくのは早いものです。</div></div></div>
+
+<div class="chip"><span>B-3　予約後2日目（診断の完全版）</span></div>
+<div class="row"><div class="av">AB</div><div class="col">
+<div class="bub">〇〇さん、こんばんは☺️
+
+先日の"手残り診断"、完全版をお渡ししますね🌷
+
+・2027年、手取りがいくら減るか
+・この1年で、いくら貯まるか
+・いま直せる3つ
+
+当日は、この数字を見ながら
+〇〇さんに合わせて整理していきます。<a class="cta" href="#">完全版をひらく</a></div></div></div>
+
+<div class="chip"><span>B-4　当日朝（下半期のがっかり回避）</span></div>
+<div class="row"><div class="av">AB</div><div class="col">
+<div class="bub">〇〇さん、本日〇時にお待ちしています🌷
+
+この60分があるかどうかで、
+今年の下半期が
+「気づけば、なくなっていた」になるか、
+「ちゃんと残った」になるか、が変わります。
+
+構えず、いまの数字のまま来てくださいね☺️<a class="cta" href="#">入室する</a></div></div></div>
+
+</div></div>
+<p class="end">— B案 ここまで —</p>
+</div>
+
+<!-- ================= A ================= -->
+<div class="pane" id="pa">
+<div class="intro">
+<p class="ttl">A案｜体験会に来なかった方へ</p>
+<p class="flow">初回の興味はあったが、来なかった層。売り込みに見えないボーナス起点で反応を取り、プチアドバイスへ。フック → 予約 → 予約後3日ナーチャリング → 当日</p>
+</div>
+<div class="legend"><b>◯円</b>の部分は、ABCash側で実データ（上半期に貯まった平均額）を入れてください。<b>ピンクの下線</b>が、通知の窓に出る冒頭13文字です。</div>
+
+<div class="phone">
+<div class="bar"><span class="back">&lsaquo;</span>ABCash<span class="cnt">掘り起こし</span></div>
+<div class="chat">
+
+<div class="chip"><span>A-1　一斉配信（眠っている方へ）</span></div>
+<div class="row"><div class="av">AB</div><div class="col"><p class="nm">ABCash</p>
+<div class="bub"><span class="h13">〇〇さん、夏のボーナス、残っていますか？</span>
+
+お久しぶりのご連絡で、すみません🌷
+今年の夏のボーナスは、厚生労働省の調べで
+手取りにすると平均34万円ほど。
+気づけば残っていない、という声も、本当に多く届きます。。
+
+そこで〇〇さんに、ひとつご提案です。
+
+＝＝＝＝＝＝＝
+"もらったあと、今年いくら貯められるか"を
+〇〇さんの数字で出す、
+あなただけのプチアドバイス
+＝＝＝＝＝＝＝
+
+オンラインで、当日の準備は何もいりません。
+受講は無料で、金融商品の販売もいたしません☺️<a class="cta" href="#">プチアドバイスの席をとる</a></div></div></div>
+
+<div class="chip"><span>A-1で反応がなかった方へ（3日後・軽く）</span></div>
+<div class="row"><div class="av">AB</div><div class="col">
+<div class="bub"><span class="h13">〇〇さん、10秒のクイズ、ひとつだけ🌷</span>
+
+答えを見た方から、へえ、と言われます☺️
+
+＝＝＝＝＝＝＝
+年収400万円の方が、1年間で
+税金と社会保険料に払っている額は？
+＝＝＝＝＝＝＝
+A 約20万円
+B 約50万円
+C 約83万円
+
+近いと思うものを、スタンプで教えてくださいね<div class="stampbox"><i>A　❤️</i><i>B　🌀</i><i>C　💡</i></div></div></div></div>
+
+<div class="chip"><span>スタンプに反応した方へ（悩みアンケート）</span></div>
+<div class="row"><div class="av">AB</div><div class="col">
+<div class="bub"><span class="h13">〇〇さん、答えは"月6.9万円"でした</span>
+
+毎月のお給料から、月におよそ6.9万円。
+1年ぶんを合計して見た方は、
+ほとんどいらっしゃいません☺️
+
+よければ、いま〇〇さんがいちばん
+気になっていることを、ひとつだけ教えてくださいね🌷<div class="opts2"><i>お金がなかなか残らない</i><i>将来がぼんやり不安</i><i>投資はしたいけれど、何から始めれば…</i><i>怪しいものには手を出したくない</i></div></div></div></div>
+
+<div class="chip"><span>アンケートに答えた方へ（プチアドバイスへ）</span></div>
+<div class="row"><div class="av">AB</div><div class="col">
+<div class="bub"><span class="h13">〇〇さんへ、夏だけのお席が空きました</span>
+
+教えてくださって、ありがとうございます🌸
+
+実はこの夏だけ、少人数の特別な枠を
+いくつかご用意しました。
+
+〇〇さんの数字を見ながら、
+「引かれたあと、どう残していくか」を
+一緒に整理する、あなただけのプチアドバイスです。
+
+今週でしたら、〇日（〇）か〇日（〇）に
+お席がございますよ。
+どちらか、合いそうでしょうか☺️<a class="cta" href="#">この日で予約する</a></div></div></div>
+
+<div class="chip"><span>予約後（B案と同じ3日ナーチャリング）</span></div>
+<div class="row"><div class="av">AB</div><div class="col">
+<div class="bub">〇〇さん、お席のご予約、ありがとうございます🌸
+
+このあとは、B案と同じ流れです。
+
+・1日目：動いた方は上半期で平均＋◯円（社会的証明）
+・2日目：手残り診断の完全版
+・当日朝：今年の下半期を、がっかりで終わらせないために
+
+＼上のB案タブで、同じ4通が見られます／</div></div></div>
+
+</div></div>
+<p class="end">— A案 ここまで —</p>
+</div>
+
+</div>
+
+<script>
+var tabs=document.querySelectorAll('.tab'),panes={};
+['a','b'].forEach(function(k){var e=document.getElementById('p'+k);if(e)panes[k]=e;});
+for(var i=0;i<tabs.length;i++){tabs[i].addEventListener('click',function(){
+for(var j=0;j<tabs.length;j++)tabs[j].classList.remove('on');
+this.classList.add('on');
+for(var k in panes)panes[k].classList.remove('on');
+var t=panes[this.getAttribute('data-p')];if(t)t.classList.add('on');
+window.scrollTo(0,0);});}
+
+// 通知プレビューを各バブル冒頭から生成して挿入
+function buildPush(){
+  document.querySelectorAll('.genpush').forEach(function(n){n.remove();});
+  document.querySelectorAll('.pane').forEach(function(pane){
+    pane.querySelectorAll('.chip').forEach(function(chip){
+      var row=chip.nextElementSibling;
+      if(!row||!row.querySelector)return;
+      var h13=row.querySelector('.h13');
+      if(!h13)return;
+      var full=h13.textContent;
+      var box=document.createElement('div');
+      box.className='push genpush';
+      box.innerHTML='<p class="ph">🔔 開く前に、通知の窓に出るのはここだけ</p>'+
+        '<div class="pnote"><div class="ic">AB</div><div class="tx">'+
+        '<div class="nm">ABCash <span>いま</span></div>'+
+        '<div class="pv">'+full+'</div></div></div>'+
+        '<p class="pcap">名前＋続きが気になる問い。<b>「こんばんは」で始めると、ここが挨拶だけになり開かれない</b></p>';
+      chip.parentNode.insertBefore(box, chip.nextElementSibling);
+      // move box to before the row (after chip)
+      chip.parentNode.insertBefore(box, chip);
+    });
+  });
+}
+buildPush();
+var pw=document.getElementById('pw');
+pw.addEventListener('change',function(){
+  document.body.classList.toggle('nopush', !this.checked);
+});
+var st=document.createElement('style');
+st.textContent='body.nopush .genpush{display:none}';
+document.head.appendChild(st);
+</script>
