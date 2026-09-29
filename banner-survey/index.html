@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>お金の広告アンケート（5分）</title>
+<style>
+  :root{--bg:#FBF7F4;--panel:#FFFFFF;--ink:#3A3330;--sub:#8A7F79;--line:#EDE4DE;--accent:#E07A8F;--accent-d:#C85C74;--soft:#FCEEF1;--ok:#2FA86E;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;font-size:16px;line-height:1.8;-webkit-text-size-adjust:100%}
+  .wrap{max-width:560px;margin:0 auto;padding:18px 16px 110px}
+  .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px}
+  .bar .track{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+  .bar .fill{height:100%;width:0;background:var(--accent);transition:width .3s}
+  .bar .lb{font-size:12px;color:var(--sub);margin-top:4px;text-align:right}
+  .step{display:none}.step.on{display:block}
+  h1{font-size:22px;font-weight:800;line-height:1.5;margin:8px 0 12px}
+  .lead{font-size:15px;color:var(--ink);margin-bottom:14px}
+  .note{font-size:13px;color:var(--sub)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+  .q{font-weight:800;font-size:16px;margin:18px 0 10px;line-height:1.6}
+  .q small{display:block;font-weight:400;font-size:12.5px;color:var(--sub)}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{display:block;width:100%;text-align:left;font:inherit;font-size:15px;background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;color:var(--ink)}
+  .opt.sel{border-color:var(--accent);background:var(--soft);font-weight:700}
+  .opt:focus-visible{outline:2px solid var(--accent-d);outline-offset:2px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips .opt{width:auto;padding:8px 14px;font-size:14px;border-radius:999px}
+  .ad{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .ad .sns{display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:12px;color:var(--sub)}
+  .ad .sns i{width:26px;height:26px;border-radius:50%;background:#e9e2dc;display:inline-block}
+  .slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .slider img{flex:0 0 100%;width:100%;scroll-snap-align:center;display:block}
+  .dots{display:flex;justify-content:center;gap:6px;padding:8px 0 10px}
+  .dots span{width:6px;height:6px;border-radius:50%;background:var(--line)}
+  .dots span.on{background:var(--accent)}
+  .swipe{font-size:12px;color:var(--sub);text-align:center;padding-bottom:8px}
+  .thumbs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .thumb{font:inherit;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:6px;cursor:pointer;color:var(--ink);font-size:12.5px}
+  .thumb img{width:100%;border-radius:8px;display:block;margin-bottom:4px}
+  .thumb.sel{border-color:var(--accent);background:var(--soft)}
+  .thumb.none{grid-column:1/-1;padding:12px}
+  textarea{width:100%;font:inherit;font-size:15px;border:1.5px solid var(--line);border-radius:12px;padding:12px;min-height:96px;background:var(--panel)}
+  input[type=text]{width:100%;font:inherit;font-size:15px;border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--panel)}
+  .nav{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(to top,var(--bg) 70%,rgba(251,247,244,0));padding:14px 16px 20px}
+  .nav .in{max-width:560px;margin:0 auto;display:flex;gap:10px}
+  .btn{flex:1;font:inherit;font-weight:800;font-size:16px;border:none;border-radius:999px;padding:14px;cursor:pointer}
+  .btn.next{background:var(--accent);color:#fff}
+  .btn.next:disabled{background:#e8cfd5;cursor:not-allowed}
+  .btn.back{flex:0 0 88px;background:var(--panel);color:var(--sub);border:1.5px solid var(--line)}
+  .err{color:var(--accent-d);font-size:13px;min-height:1em;margin-top:8px}
+  .hl{background:linear-gradient(transparent 60%,#FCE3E8 60%);font-weight:800}
+  .done{text-align:center;padding-top:40px}
+  .done h1{font-size:24px}
+  .bug{display:block;text-align:center;font-size:12px;color:var(--sub);margin-top:30px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;width:100%}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar" id="bar" hidden><div class="track"><div class="fill" id="fill"></div></div><div class="lb" id="lbl"></div></div>
+  <div id="app"></div>
+  <button class="bug" id="bugBtn" type="button">うまく動かないときはこちら</button>
+</div>
+<div class="nav" id="nav" hidden><div class="in"><button class="btn back" id="back" type="button">戻る</button><button class="btn next" id="next" type="button">次へ</button></div></div>
+
+<script>
+(function(){
+"use strict";
+var U="https://inrvprlyobghviklulcv.supabase.co/rest/v1/ailab_notes";
+var K="sb_publishable_ZrCNcsRHMci-l7Fns8QtIA_X22XZGJp";
+var CFG={memberId:"survey_abcash_banner",thanks:""};
+
+/* ---- 広告（ローテーション7点＋比較用1点） ---- */
+var ADS={
+ b1:{imgs:["img/b1.jpg"]},
+ b2:{imgs:["img/b2.jpg"]},
+ b3:{imgs:["img/b3.jpg"]},
+ c1:{imgs:[1,2,3,4,5].map(function(i){return "img/c1_"+i+".jpg";})},
+ c2:{imgs:[1,2,3,4,5,6].map(function(i){return "img/c2_"+i+".jpg";})},
+ c3:{imgs:[1,2,3,4,5,6].map(function(i){return "img/c3_"+i+".jpg";})},
+ c4:{imgs:[1,2,3,4].map(function(i){return "img/c4_"+i+".jpg";})}
+};
+var ORDER=["b1","b2","b3","c1","c2","c3","c4"];
+/* 7点から4点ずつ・各広告が同じ回数出るように割り付け（ファノ平面の補集合） */
+var LINES=[[0,1,3],[1,2,4],[2,3,5],[3,4,6],[4,5,0],[5,6,1],[6,0,2]];
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
+var block=store("abs_block"); if(block===null){block=String(Math.floor(Math.random()*7));store("abs_block",block);} block=+block;
+var group=store("abs_group"); if(group===null){group=Math.random()<0.5?"V":"T";store("abs_group",group);}
+var shown=ORDER.filter(function(_,i){return LINES[block].indexOf(i)<0;});
+shown=shown.map(function(v){return [Math.random(),v];}).sort(function(a,b){return a[0]-b[0];}).map(function(x){return x[1];});
+var rid=store("abs_rid"); if(!rid){rid="r"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);store("abs_rid",rid);}
+
+var A={}; /* answers */
+
+function adHTML(id,imgs,tag){
+  var h='<div class="ad"><div class="sns"><i></i><span>広告 ・ 当時のSNSで流れてきたと思って見てください</span></div><div class="slider" data-s="'+tag+'">';
+  imgs.forEach(function(s){h+='<img src="'+s+'" alt="広告画像" loading="eager">';});
+  h+='</div>';
+  if(imgs.length>1){h+='<div class="dots">'+imgs.map(function(_,i){return '<span'+(i?'':' class="on"')+'></span>';}).join("")+'</div><div class="swipe">← 横にスワイプして最後まで見てください（'+imgs.length+'枚） →</div>';}
+  return h+'</div>';
+}
+var REACT=["スルーする","止まって見る（タップはしない）","タップして、無料動画だけ受け取る","タップして、無料体験会の予約まで進みたい"];
+var EXPECT=["無料動画がもらえるだけ","お金の情報がLINEで届く","人に相談できる場がある","何かを売られそう","よくわからない"];
+
+/* ---- ステップ定義 ---- */
+var S=[];
+S.push({kind:"intro"});
+shown.forEach(function(id,i){
+  S.push({kind:"ad",id:id,n:i+1,qs:[
+    {k:"ad_"+id+"_react",t:"この広告が流れてきたら、<span class='hl'>当時のあなた</span>はどうしていたと思いますか？",o:REACT,type:"one"},
+    {k:"ad_"+id+"_expect",t:"この広告をタップした先に、何があると思いますか？",o:EXPECT,type:"one"},
+    {k:"ad_"+id+"_seen",t:"この広告を見たことはありますか？",o:["ある","ない","わからない"],type:"chips"}
+  ]});
+});
+S.push({kind:"pick"});
+S.push({kind:"split"});
+S.push({kind:"qs",title:"ボタンと中身について",qs:[
+  {k:"cta_pick",t:"広告のボタンがこの中にあったら、<span class='hl'>当時のあなた</span>が押すのはどれ？",o:["無料動画3本を受け取る","とりあえず無料で聞いてみる","自分のタイプを知る","60分の無料体験会を予約する","どれも押さない"],type:"one",shuffle:4},
+  {k:"offer",t:"無料体験会（60分・オンライン・個別）に申し込みたくなるのは、どれがあるとき？",note:"2つまで",o:["無料動画3本がもらえる","自分のタイプに合ったお金の整え方がわかる","毎月いくら使っていいかがわかる","同じ立場の受講生の実例が聞ける","参加特典（ギフトなど）がある","金融商品の販売がないとわかっている","顔出しなし・聞くだけでいい","どれもない"],type:"multi",max:2},
+  {k:"lp_head",t:"広告の先のページの見出しです。<span class='hl'>当時のあなた</span>が「私のことだ」と思うのはどれ？",o:["お金のこと、まだ一歩を踏み出せていない、あなたへ。","動画でお金を学んでも、何も変わらず、諦めたあなたへ。","お金のスクールで変われず、諦めたあなたへ。","どれも違う"],type:"one"}
+]});
+S.push({kind:"qs",title:"ABCashを申し込んだころのこと",qs:[
+  {k:"rel",t:"ABCashとの関わりで、当てはまるものを全部選んでください",o:["無料体験会を受けた","体験会を一度キャンセルしたことがある","入会した","今も受講中","卒業した","その他"],type:"multi",max:6},
+  {k:"source",t:"ABCashを知ったきっかけは？",o:["Instagram・Facebookの広告","Xの広告","TikTokの広告","YouTube","検索","知人の紹介","覚えていない","その他"],type:"one"},
+  {k:"concern",t:"当時、いちばん気になっていたお金のことは？",o:["貯金が増えない","毎月のやりくり","仕事や推し活・趣味との両立","ローン・借入","NISA・投資","老後・将来","その他"],type:"one"},
+  {k:"prior",t:"ABCashの前に、お金のことはどう学んでいましたか？",o:["特に学んでいなかった","動画・本・SNSで学んでいた","別のお金のスクールに通った"],type:"one"}
+]});
+S.push({kind:"qs",title:"体験会を申し込むまで",qs:[
+  {k:"hesitate",t:"体験会を申し込む前に、迷ったことは？",note:"2つまで",o:["営業されそうで不安","何をするのかわからない","お金の話を人にするのが恥ずかしい","時間が合わない","また続かない気がした","家族に相談が必要","迷わなかった"],type:"multi",max:2},
+  {k:"push",t:"それでも申し込めたのは、何が背中を押したから？",note:"2つまで",o:["無料だった","自分に合わせてくれそうだった","売り込みがなさそうだった","受講生の声を見た","特典があった","期限・残り枠があった","担当者からの連絡","お金の不安が限界だった","その他"],type:"multi",max:2},
+  {k:"line_first",t:"LINEに登録したあと、何が届いたら体験会まで進みやすかったと思いますか？",o:["無料動画","自分のタイプの診断結果","担当者からのひと言","体験会の日程の案内","特になし・覚えていない"],type:"one"},
+  {k:"watched",t:"受け取った動画や資料を、体験会の前に見ましたか？",o:["全部見た","一部見た","見ていない","受け取っていない","覚えていない"],type:"one"}
+]});
+S.push({kind:"qs",title:"体験会の前のこと",qs:[
+  {k:"quit",t:"体験会の前に「やっぱりやめようかな」と思ったことは？",o:["あった","なかった"],type:"one"},
+  {k:"quit_reason",t:"それでも参加したのは、なぜですか？",o:["予約していたから","担当者から連絡があった","特典がもらえるから","気になる気持ちが勝った","その他"],type:"one",show:function(){return A.quit==="あった";}}
+]});
+S.push({kind:"qs",title:"最後にあなたのこと",qs:[
+  {k:"age",t:"年代",o:["20代","30代前半","30代後半","40代","50代以上"],type:"chips"},
+  {k:"gender",t:"性別",o:["女性","男性","答えない"],type:"chips"},
+  {k:"work",t:"働き方",o:["会社員・公務員","パート・派遣","自営業・フリーランス","専業主婦・主夫","その他"],type:"chips"},
+  {k:"oneword",t:"当時のあなたに「無料体験会、行ってみよう」と思わせる広告の一言は？",note:"任意・ひとことでOK",type:"text",optional:true},
+  {k:"name",t:"お名前（ニックネーム可）",note:"任意",type:"line",optional:true}
+]});
+S.push({kind:"done"});
+
+var cur=0, app=document.getElementById("app");
+
+function shuffleKeep(arr,n){var head=arr.slice(0,n).map(function(v){return [Math.random(),v];}).sort(function(a,b){return a[0]-b[0];}).map(function(x){return x[1];});return head.concat(arr.slice(n));}
+var SHUF={};
+function opts(q){
+  if(q.shuffle){if(!SHUF[q.k])SHUF[q.k]=shuffleKeep(q.o,q.shuffle);return SHUF[q.k];}
+  return q.o;
+}
+function qHTML(q){
+  if(q.show&&!q.show())return "";
+  var h='<div class="q">'+q.t+(q.note?'<small>'+q.note+'</small>':'')+'</div>';
+  if(q.type==="text"){return h+'<textarea data-k="'+q.k+'" placeholder="例：〇〇なら行ってみたかった">'+(A[q.k]||"")+'</textarea>';}
+  if(q.type==="line"){return h+'<input type="text" data-k="'+q.k+'" value="'+(A[q.k]||"")+'">';}
+  var cls=q.type==="chips"?"chips":"opts";
+  h+='<div class="'+cls+'" data-q="'+q.k+'">';
+  opts(q).forEach(function(o){
+    var sel=q.type==="multi"?(A[q.k]||[]).indexOf(o)>=0:A[q.k]===o;
+    h+='<button type="button" class="opt'+(sel?' sel':'')+'" data-k="'+q.k+'" data-v="'+o+'">'+o+'</button>';
+  });
+  return h+'</div>';
+}
+function thumbsHTML(k,title){
+  var h='<div class="q">'+title+'</div><div class="thumbs">';
+  shown.forEach(function(id,i){h+='<button type="button" class="thumb'+(A[k]===id?' sel':'')+'" data-t="'+k+'" data-v="'+id+'"><img src="'+ADS[id].imgs[0]+'" alt="">'+(i+1)+'つ目の広告</button>';});
+  return h+'<button type="button" class="thumb none'+(A[k]==="none"?' sel':'')+'" data-t="'+k+'" data-v="none">どれもない</button></div>';
+}
+function render(){
+  var s=S[cur], h="";
+  if(s.kind==="intro"){
+    h='<h1>お金の広告についての<br>5分アンケート</h1>'
+     +'<p class="lead">ABCashを経験したRe:cheのみなさんにだけお願いしています。</p>'
+     +'<div class="card">実際にSNSに出ているお金のスクールの広告を見て、<b>「当時の自分なら押したか」</b>を教えてください。<br><br>正解はありません。直感で大丈夫です。回答はお名前が分からない形で集計し、広告づくりの参考にします。</div>'
+     +(CFG.thanks?'<div class="card">'+CFG.thanks+'</div>':'')
+     +'<p class="note">所要時間 5〜6分・タップで答えられます</p>';
+  }else if(s.kind==="ad"){
+    h='<h1>広告 '+s.n+' / '+shown.length+'</h1>'+adHTML(s.id,ADS[s.id].imgs,s.id)+s.qs.map(qHTML).join("");
+  }else if(s.kind==="pick"){
+    h='<h1>今見た4つの広告を比べると</h1>'
+     +thumbsHTML("pick_tap","<span class='hl'>当時のあなた</span>が1つだけ押すなら、どれ？")
+     +thumbsHTML("pick_trial","押したあと、<span class='hl'>無料体験会の予約まで進みそう</span>なのはどれ？")
+     +qHTML({k:"pick_why",t:"そう思った理由は？",note:"2つまで",o:["自分のことだと思えた","絵・写真の雰囲気が好き","続きが気になった","何がもらえるかわかりやすい","信頼できそう","押しつけ感がない","その他"],type:"multi",max:2});
+  }else if(s.kind==="split"){
+    var src=group==="T"?"img/s_trial.jpg":"img/s_video.jpg";
+    h='<h1>もう1枚だけ</h1>'+adHTML("s",[src],"s")
+     +qHTML({k:"split_react",t:"この広告が流れてきたら、<span class='hl'>当時のあなた</span>はどうしていたと思いますか？",o:["スルーする","止まって見る（タップはしない）","ボタンを押す"],type:"one"});
+  }else if(s.kind==="qs"){
+    h='<h1>'+s.title+'</h1>'+s.qs.map(qHTML).join("");
+  }else if(s.kind==="done"){
+    h='<div class="done"><h1>ご協力ありがとうございました</h1><p class="lead">いただいた声は、これからの広告づくりに大切に使わせていただきます。</p>'+(CFG.thanks?'<div class="card">'+CFG.thanks+'</div>':'')+'</div>';
+  }
+  app.innerHTML=h+'<div class="err" id="err"></div>';
+  bind(); prog(); window.scrollTo(0,0);
+}
+function prog(){
+  var bar=document.getElementById("bar"), nav=document.getElementById("nav");
+  var s=S[cur];
+  bar.hidden=(s.kind==="intro"||s.kind==="done");
+  nav.hidden=(s.kind==="done");
+  document.getElementById("fill").style.width=Math.round(cur/(S.length-1)*100)+"%";
+  document.getElementById("lbl").textContent=cur+" / "+(S.length-2);
+  document.getElementById("back").style.display=cur===0?"none":"";
+  document.getElementById("next").textContent=s.kind==="intro"?"はじめる":(cur===S.length-2?"送信する":"次へ");
+}
+function findQ(k){
+  var s=S[cur];
+  var pool=(s.qs||[]).concat([{k:"pick_why",type:"multi",max:2},{k:"split_react",type:"one"}]);
+  for(var i=0;i<pool.length;i++)if(pool[i].k===k)return pool[i];
+  return {type:"one"};
+}
+function bind(){
+  app.querySelectorAll(".opt").forEach(function(b){
+    b.addEventListener("click",function(){
+      var k=b.dataset.k,v=b.dataset.v,q=findQ(k);
+      if(q.type==="multi"){
+        var arr=(A[k]||[]).slice(),i=arr.indexOf(v);
+        var excl=/^(迷わなかった|どれもない)$/;
+        if(i>=0)arr.splice(i,1);
+        else{
+          if(excl.test(v))arr=[v];
+          else{arr=arr.filter(function(x){return !excl.test(x);}); if(arr.length>=q.max)arr.shift(); arr.push(v);}
+        }
+        A[k]=arr;
+      }else A[k]=v;
+      if(k==="quit"){render();return;}
+      b.parentNode.querySelectorAll(".opt").forEach(function(x){
+        var sel=q.type==="multi"?(A[k]||[]).indexOf(x.dataset.v)>=0:A[k]===x.dataset.v;
+        x.classList.toggle("sel",sel);
+      });
+    });
+  });
+  app.querySelectorAll(".thumb").forEach(function(b){
+    b.addEventListener("click",function(){A[b.dataset.t]=b.dataset.v;app.querySelectorAll('.thumb[data-t="'+b.dataset.t+'"]').forEach(function(x){x.classList.toggle("sel",x===b);});});
+  });
+  app.querySelectorAll("textarea,input[type=text]").forEach(function(t){t.addEventListener("input",function(){A[t.dataset.k]=t.value;});});
+  app.querySelectorAll(".slider").forEach(function(sl){
+    var dots=sl.parentNode.querySelectorAll(".dots span");
+    if(!dots.length)return;
+    sl.addEventListener("scroll",function(){var i=Math.round(sl.scrollLeft/sl.clientWidth);dots.forEach(function(d,j){d.classList.toggle("on",i===j);});});
+  });
+}
+function missing(){
+  var s=S[cur], keys=[];
+  if(s.kind==="ad"||s.kind==="qs"){s.qs.forEach(function(q){if(q.optional)return;if(q.show&&!q.show())return;var v=A[q.k];if(!v||(Array.isArray(v)&&!v.length))keys.push(q.k);});}
+  if(s.kind==="pick"){["pick_tap","pick_trial"].forEach(function(k){if(!A[k])keys.push(k);});if(!(A.pick_why||[]).length)keys.push("pick_why");}
+  if(s.kind==="split"&&!A.split_react)keys.push("split_react");
+  return keys;
+}
+function send(){
+  var payload={rid:rid,block:block,group:group,shown:shown,ua:navigator.userAgent.slice(0,120),at:new Date().toISOString(),answers:A};
+  var body={member_id:CFG.memberId,member_name:(A.name||"匿名").slice(0,40),mood:"広告アンケート回答",worry:JSON.stringify(payload),want:location.href.slice(0,180)};
+  return fetch(U,{method:"POST",headers:{apikey:K,Authorization:"Bearer "+K,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify(body)});
+}
+document.getElementById("next").addEventListener("click",function(){
+  var m=missing(), err=document.getElementById("err");
+  if(m.length){err.textContent="まだ選んでいない質問があります";return;}
+  if(cur===S.length-2){
+    var btn=this; btn.disabled=true; btn.textContent="送信中…";
+    send().then(function(r){if(!r.ok)throw 0;store("abs_done","1");cur++;render();})
+      .catch(function(){btn.disabled=false;btn.textContent="送信する";err.textContent="送信できませんでした。電波の良い場所でもう一度押してください";});
+    return;
+  }
+  cur++; render();
+});
+document.getElementById("back").addEventListener("click",function(){if(cur>0){cur--;render();}});
+document.getElementById("bugBtn").addEventListener("click",function(){
+  var t=prompt("どこで、どう動かなかったか教えてください");
+  if(!t)return;
+  fetch(U,{method:"POST",headers:{apikey:K,Authorization:"Bearer "+K,"Content-Type":"application/json",Prefer:"return=minimal"},
+    body:JSON.stringify({member_id:"bug_abcash-banner-survey",member_name:"広告アンケート",mood:"バグ報告",worry:t,want:location.href.slice(0,180)+" ／ "+navigator.userAgent.slice(0,140)})})
+   .then(function(){document.getElementById("bugBtn").textContent="送りました。ありがとうございます";});
+});
+render();
+})();
+</script>
+</body>
+</html>
