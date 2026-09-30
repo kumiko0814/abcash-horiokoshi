@@ -1,373 +1,345 @@
-<title>未入会「学びたい」層 理由別プッシュ文面</title>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>未入会者 再配信文面</title>
 <style>
   :root{
-    --bg:#F7F6F3; --panel:#FFFFFF; --ink:#33312E; --sub:#7C776F; --line:#E6E2DA;
-    --navy:#3D5A96; --navy-soft:#E3EAF7; --pink:#C98CA0; --pink-soft:#F6EAEF;
-    --warn:#B3541E; --warn-soft:#FAEADF; --ok:#2E7D4F; --ok-soft:#E6F2EB;
-    --chat:#8CABD9; --bubble:#FFFFFF; --mine:#8DE38A;
+    --bg:#F1F7FB; --panel:#FFFFFF; --ink:#26405F; --text:#4A4446; --sub:#7A7F88; --line:#DCE6EE;
+    --navy:#26405F; --navy-soft:#E4EDF5; --pink:#BD7886; --pink-soft:#FBEEF1; --blue:#7FB0D2;
+    --warn:#A8603A; --warn-soft:#FBF0E8; --ok:#3F7A63; --ok-soft:#E7F3EE;
+    --chat:#8FAFCB; --bubble:#FFFFFF;
   }
   @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){ --bg:#1B1C1F; --panel:#26272B; --ink:#E9E7E2; --sub:#9C968D; --line:#3B3C41;
-      --navy:#7C9BD8; --navy-soft:#22304A; --pink:#D9A4B6; --pink-soft:#3A2A32;
-      --warn:#E08A4E; --warn-soft:#3E2B1D; --ok:#5CBF8A; --ok-soft:#1F3A2C; --chat:#3E4F6B; --bubble:#F2F2F2; --mine:#7CCB79; }
+    :root:not([data-theme="light"]){ --bg:#161C24; --panel:#212933; --ink:#DCE7F2; --text:#E4E1E2; --sub:#9AA3AE; --line:#34404D;
+      --navy:#9CBBDA; --navy-soft:#223246; --pink:#DFA3AF; --pink-soft:#3A2A30; --blue:#7FB0D2;
+      --warn:#E0A07A; --warn-soft:#3A2A20; --ok:#7CC4A6; --ok-soft:#1E3530; --chat:#3B4E63; --bubble:#F4F4F4; }
   }
-  :root[data-theme="dark"]{ --bg:#1B1C1F; --panel:#26272B; --ink:#E9E7E2; --sub:#9C968D; --line:#3B3C41;
-    --navy:#7C9BD8; --navy-soft:#22304A; --pink:#D9A4B6; --pink-soft:#3A2A32;
-    --warn:#E08A4E; --warn-soft:#3E2B1D; --ok:#5CBF8A; --ok-soft:#1F3A2C; --chat:#3E4F6B; --bubble:#F2F2F2; --mine:#7CCB79; }
+  :root[data-theme="dark"]{ --bg:#161C24; --panel:#212933; --ink:#DCE7F2; --text:#E4E1E2; --sub:#9AA3AE; --line:#34404D;
+    --navy:#9CBBDA; --navy-soft:#223246; --pink:#DFA3AF; --pink-soft:#3A2A30; --blue:#7FB0D2;
+    --warn:#E0A07A; --warn-soft:#3A2A20; --ok:#7CC4A6; --ok-soft:#1E3530; --chat:#3B4E63; --bubble:#F4F4F4; }
 
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:15px;line-height:1.85}
-  .wrap{max-width:920px;margin:0 auto;padding:30px 18px 90px}
-  .eyebrow{font-size:11px;letter-spacing:.2em;color:var(--sub);font-weight:700}
-  h1{font-family:"Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;font-size:clamp(20px,3vw,26px);font-weight:800;margin:6px 0 8px;text-wrap:balance}
-  .lede{font-size:13px;color:var(--sub);max-width:46em}
-  .overview{background:var(--navy-soft);border-radius:14px;padding:16px 20px;margin:20px 0 8px;font-size:13.5px}
-  .overview b{color:var(--navy)}
-  .overview ol{margin-left:1.4em}
-  .overview li{margin-bottom:4px}
+  body{background:var(--bg);color:var(--text);font-family:"Yu Gothic","YuGothic","Hiragino Sans","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;font-weight:500;font-size:15px;line-height:1.85}
+  .wrap{max-width:940px;margin:0 auto;padding:28px 16px 90px}
+  .eyebrow{font-size:11px;letter-spacing:.18em;color:var(--pink);font-weight:700}
+  h1{color:var(--ink);font-size:clamp(20px,4.6vw,26px);font-weight:800;margin:6px 0 8px;line-height:1.5;text-wrap:balance}
+  .lede{font-size:13.5px;color:var(--sub);max-width:48em}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:16px 0 0;font-size:13.5px}
+  .box .tt{color:var(--ink);font-weight:800;margin-bottom:6px}
+  .box ol,.box ul{margin-left:1.3em}
+  .box li{margin-bottom:5px}
+  .new{display:inline-block;background:var(--pink);color:#fff;border-radius:999px;font-size:10.5px;font-weight:800;padding:0 8px;margin-right:6px;vertical-align:1px}
 
-  .tabs{display:flex;gap:6px;margin:22px 0 22px;flex-wrap:wrap}
-  .tab{appearance:none;border:1.5px solid var(--line);background:var(--panel);color:var(--sub);font:inherit;font-weight:700;font-size:13px;padding:8px 13px;border-radius:999px;cursor:pointer}
+  .tabs{display:flex;gap:6px;margin:22px 0;flex-wrap:wrap}
+  .tab{appearance:none;border:1.5px solid var(--line);background:var(--panel);color:var(--sub);font:inherit;font-weight:700;font-size:13px;padding:7px 12px;border-radius:999px;cursor:pointer}
   .tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
-  .tab:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+  :root[data-theme="dark"] .tab[aria-selected="true"]{color:#161C24}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#161C24}}
+  .tab:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
   .view{display:none}.view.on{display:block}
 
-  h2{font-size:16px;font-weight:800;margin:30px 0 6px;padding-left:12px;border-left:4px solid var(--navy)}
+  h2{color:var(--ink);font-size:16.5px;font-weight:800;margin:26px 0 6px;padding-left:12px;border-left:4px solid var(--pink)}
   .h2sub{font-size:12.5px;color:var(--sub);margin-bottom:12px;padding-left:16px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:12px;font-size:13.5px}
-  .card li{margin-left:1.3em;margin-bottom:5px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:12px;font-size:13.5px}
+  .card li{margin-left:1.3em;margin-bottom:4px}
   .warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:10px;padding:10px 14px;font-size:13px;margin:10px 0}
   .good{background:var(--ok-soft);border-left:4px solid var(--ok);border-radius:10px;padding:10px 14px;font-size:13px;margin:10px 0}
   .twrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px}
-  table{border-collapse:collapse;width:100%;font-size:13px;min-width:560px}
-  th{background:var(--navy-soft);text-align:left;font-size:12px;color:var(--ink);padding:9px 14px}
-  td{padding:9px 14px;border-top:1px solid var(--line);vertical-align:top}
-  .key{display:inline-block;background:var(--pink-soft);color:var(--ink);border-radius:999px;font-size:12px;font-weight:700;padding:2px 10px}
+  table{border-collapse:collapse;width:100%;font-size:13px;min-width:600px}
+  th{background:var(--navy-soft);color:var(--ink);text-align:left;font-size:12px;padding:9px 12px;white-space:nowrap}
+  td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tr.sum td{font-weight:800;color:var(--ink)}
+  .key{display:inline-block;background:var(--pink-soft);color:var(--pink);border-radius:999px;font-size:12px;font-weight:800;padding:1px 10px}
+  pre.code{background:var(--navy-soft);color:var(--ink);border-radius:10px;padding:12px 14px;font-size:11.5px;line-height:1.6;white-space:pre-wrap;word-break:break-all;font-family:ui-monospace,Menlo,monospace}
 
-  /* segment page */
   .seg{display:grid;grid-template-columns:1fr;gap:18px}
-  @media(min-width:800px){.seg{grid-template-columns:1.15fr .85fr}}
-  .phone{background:var(--chat);border-radius:22px;padding:16px 12px;min-height:200px}
-  .bubble{background:var(--bubble);color:#222;border-radius:16px;padding:12px 14px;font-size:13.2px;line-height:1.85;white-space:pre-wrap;max-width:92%;margin-bottom:10px;position:relative}
-  .bubble.mine{background:var(--mine);margin-left:auto}
-  .window{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12.5px;margin-bottom:12px}
-  .window .lb{font-size:10.5px;color:var(--sub);letter-spacing:.1em;font-weight:700}
-  .window .tx{font-weight:700;margin-top:2px}
-  .who{font-size:12px;font-weight:700;color:var(--navy);margin:2px 0 6px}
-  .copybtn{appearance:none;border:1px solid var(--line);background:var(--panel);color:var(--sub);font:inherit;font-size:12px;font-weight:700;border-radius:999px;padding:6px 16px;cursor:pointer;margin-top:8px}
-  .copybtn:hover{color:var(--navy);border-color:var(--navy)}
+  @media(min-width:820px){.seg{grid-template-columns:1.1fr .9fr}}
+  .phone{background:var(--chat);border-radius:22px;padding:16px 12px}
+  .bubble{background:var(--bubble);color:#2B2B2B;border-radius:16px;padding:12px 14px;font-size:13.5px;line-height:1.85;white-space:pre-wrap;word-break:break-word;max-width:94%}
+  .window{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:12.5px;margin-bottom:12px}
+  .window .lb{font-size:10.5px;color:var(--sub);letter-spacing:.08em;font-weight:700}
+  .window .tx{font-weight:700;color:var(--ink);margin-top:2px}
+  .who{font-size:12px;font-weight:700;color:#fff;margin:0 0 6px 4px}
+  .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .copybtn{appearance:none;border:1.5px solid var(--pink);background:var(--panel);color:var(--pink);font:inherit;font-size:12.5px;font-weight:800;border-radius:999px;padding:6px 18px;cursor:pointer}
+  .copybtn:hover{background:var(--pink-soft)}
   .copybtn:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
-  .side .card{margin-bottom:12px}
-  .side .tt{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--sub);margin-bottom:6px}
+  .len{font-size:11.5px;color:var(--sub)}
+  .side .tt{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--pink);margin-bottom:4px}
   .reply{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;font-size:13px}
-  .reply b{white-space:nowrap}
-  .foot{margin-top:30px;font-size:11px;color:var(--sub)}
+  .reply b{white-space:nowrap;color:var(--ink)}
+  .foot{margin-top:32px;font-size:11px;color:var(--sub)}
+  .nowrap{white-space:nowrap}
 </style>
-
+</head>
+<body>
 <div class="wrap">
-  <div class="eyebrow">ABCASH × MERONE｜体験会参加・未入会「学びたい」層</div>
-  <h1>未入会の理由別 プッシュ文面（8区分）</h1>
-  <p class="lede">個票タブの「未入会理由（選択式）」をそのまま仕分けキーにしています。理由を見て、該当の文面をコピーして送るだけです。案内するのは体験会ではなく「個別のご相談（30分・オンライン）」です。</p>
+  <div class="eyebrow">ABCASH × MERONE｜体験会参加・未入会の方</div>
+  <h1>未入会者 1,222名への<span class="nowrap">再配信文面</span><br><span class="nowrap">（SPOT配信・7区分）</span></h1>
+  <p class="lede">足立さんが除外を済ませた最新シート（1,222名）に合わせて作り直しました。区分ごとにSPOT配信で送り、返信が来た方だけ個別に日程をお送りする流れです。</p>
 
-  <div class="overview">
-    <b>送り方のルール（6つだけ）</b>
-    <ol>
-      <li>理由が複数ある方は、下の表の<b>上から順に最初に当たった区分</b>の文面を1通だけ送る</li>
-      <li>順番は「非常に思った」211名が先、次に「思った」1,075名</li>
-      <li>返信がない方にだけ、<b>2日後に共通の2通目</b>を1通。それで終わり（追わない）</li>
-      <li>返信が来たら、①②③に合わせて個別対応（「返信への対応」タブ）</li>
-      <li>冒頭の近況うかがいは<b>全区分で同じ1文</b>。そのあとに区分ごとの問いかけが続く</li>
-      <li>案内は「個別のご相談（30分・オンライン）」。<b>同じ体験会の再案内はしない</b></li>
-    </ol>
+  <div class="box">
+    <div class="tt">9月25日版から変えたところ</div>
+    <ul>
+      <li><span class="new">変更</span>「内容の相違・マンツーマン形式・担当者との相性」の区分を削除しました。この3つを選んだ方はシートから除外済みのためです。</li>
+      <li><span class="new">変更</span>「体験会の時に〇〇とおっしゃっていた」を「体験会のあとのアンケートで教えてくださった」に直しました。一斉に送る文面では、全員がその場で口にしたとは限りません。言っていないことを「おっしゃっていた」と書くと、そこで信用を失います。</li>
+      <li><span class="new">変更</span>区分分けに自由記述も使うようにしました。シートに計算式を1本貼れば、全員に区分が自動で入ります。</li>
+      <li><span class="new">変更</span>「①」と返信した方には、空いている日程を5つ貼ってお送りする形にしました。</li>
+      <li><span class="new">追加</span>1,222名を4回に分けて送る計画を付けました。返信に1人で対応しきれる量に抑えるためです。</li>
+    </ul>
   </div>
 
   <div class="tabs" role="tablist">
-    <button class="tab" aria-selected="true" data-v="0">仕分け表</button>
-    <button class="tab" aria-selected="false" data-v="1">A 家族の同意</button>
-    <button class="tab" aria-selected="false" data-v="2">B 受講料</button>
-    <button class="tab" aria-selected="false" data-v="3">C タイミング</button>
-    <button class="tab" aria-selected="false" data-v="4">D 学習時間</button>
-    <button class="tab" aria-selected="false" data-v="5">E 他スクール・独学</button>
-    <button class="tab" aria-selected="false" data-v="6">F 他の習い事</button>
-    <button class="tab" aria-selected="false" data-v="7">G 内容の相違</button>
-    <button class="tab" aria-selected="false" data-v="8">H 考えたい</button>
-    <button class="tab" aria-selected="false" data-v="9">共通2通目</button>
-    <button class="tab" aria-selected="false" data-v="10">返信への対応</button>
+    <button class="tab" role="tab" aria-selected="true" data-v="plan">配信計画</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="A">A 家族</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="B">B 費用</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="C">C タイミング</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="D">D 時間</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="E">E 他の学び方</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="F">F 他の習い事</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="H">H 考えたい</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="r2">2通目</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="reply">返信への対応</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="ask">ABCashに確認</button>
   </div>
 
-  <!-- ===== 仕分け表 ===== -->
-  <section class="view on" id="v0">
-    <h2>個票の理由 → 文面</h2>
-    <div class="h2sub">上から順に見て、最初に当たった行の文面を使います。</div>
+  <!-- ===== 配信計画 ===== -->
+  <section class="view on" id="v-plan">
+    <h2>区分と人数（1,222名・最新シートで集計）</h2>
+    <div class="h2sub">理由が複数ある方は、上の区分から順に最初に当たったところに入ります。</div>
     <div class="twrap"><table>
-      <tr><th>優先</th><th>個票「未入会理由（選択式）」</th><th>自由記述にこの言葉があれば</th><th>文面</th></tr>
-      <tr><td>1</td><td>家族・パートナーの同意が必要</td><td>主人が反対／妻に相談</td><td><span class="key">A</span></td></tr>
-      <tr><td>2</td><td>予算に対して受講料が高い／費用対効果に納得できなかった</td><td>費用面／払えない／金額／捻出</td><td><span class="key">B</span></td></tr>
-      <tr><td>3</td><td>今は開始のタイミングではない</td><td>出産／手術／進学／忙しい時期</td><td><span class="key">C</span></td></tr>
-      <tr><td>4</td><td>学習時間の確保が困難</td><td>時間がない</td><td><span class="key">D</span></td></tr>
-      <tr><td>5</td><td>他の金融スクールを検討・受講中／独学で十分だと判断</td><td></td><td><span class="key">E</span></td></tr>
-      <tr><td>6</td><td>他の習い事（副業、語学等）を優先</td><td></td><td><span class="key">F</span></td></tr>
-      <tr><td>7</td><td>内容が期待と相違／マンツーマン形式が合わない</td><td></td><td><span class="key">G</span></td></tr>
-      <tr><td>8</td><td>その他（自由記載）のみ</td><td>考えたい／即決できなかった／持ち帰り</td><td><span class="key">H</span></td></tr>
+      <tr><th>区分</th><th>計</th><th>非常に思った</th><th>思った</th><th>どんな方か</th></tr>
+      <tr><td><span class="key">A</span></td><td class="n">435</td><td class="n">60</td><td class="n">375</td><td>家族・パートナーの同意が必要（自由記述の「主人」「夫」「婚約者」なども）</td></tr>
+      <tr><td><span class="key">B</span></td><td class="n">445</td><td class="n">79</td><td class="n">366</td><td>受講料が高い・費用対効果（自由記述の「金銭面」「決済」「出費」なども）</td></tr>
+      <tr><td><span class="key">C</span></td><td class="n">182</td><td class="n">31</td><td class="n">151</td><td>今は開始のタイミングではない（出産・手術・体調・時期など）</td></tr>
+      <tr><td><span class="key">D</span></td><td class="n">69</td><td class="n">11</td><td class="n">58</td><td>学習時間の確保が困難</td></tr>
+      <tr><td><span class="key">E</span></td><td class="n">44</td><td class="n">9</td><td class="n">35</td><td>他のスクールと比較・独学</td></tr>
+      <tr><td><span class="key">F</span></td><td class="n">13</td><td class="n">1</td><td class="n">12</td><td>他の習い事・資格の勉強を優先</td></tr>
+      <tr><td><span class="key">H</span></td><td class="n">34</td><td class="n">6</td><td class="n">28</td><td>上のどれでもない（「検討したい」「即決できなかった」など）</td></tr>
+      <tr class="sum"><td>合計</td><td class="n">1,222</td><td class="n">197</td><td class="n">1,025</td><td></td></tr>
     </table></div>
-    <div class="warn">「自由に使えるお金」が「借金返済にあてている／赤字」の方は、Bを送る場合でも返信後に支払いや分割の話を出さず、近況を聞くところまでに留めてください。</div>
-    <div class="good">全文面に共通で入れているもの：近況うかがいの冒頭1文／体験会での本人の言葉を1つ引用／3択の番号返信／逃げ道の③。売り込み・日程はこの1通では出さず、返信①の方にだけ枠を提示します。</div>
+
+    <h2>区分を自動で入れる計算式</h2>
+    <div class="h2sub">シート「ABCashで学びたいと回答したユーザーrawデータ」のL1に「配信区分」と入れ、L2にこの式を1回貼るだけです。全行に区分が入ります。</div>
+    <pre class="code" id="m-formula">=MAP(A2:A,J2:J,K2:K,LAMBDA(id,j,k,IF(id="","",LET(t,j&" "&k,IFS(
+REGEXMATCH(t,"家族・パートナー|主人|夫|旦那|妻|家族と|家族に|パートナーと|婚約者|親と|親に|子供に相談|1人での判断"),"A",
+REGEXMATCH(t,"受講料|費用|払え|金額|捻出|経済|高額|高かった|支払|お金が|金銭|資金|工面|債務|ローン|余裕がな|入会金|決済|クレジット|出費|貯蓄|給料|支出|やりくり"),"B",
+REGEXMATCH(t,"タイミング|時期|出産|妊娠|手術|進学|体調|入院|引っ越|引越|転職|落ち着|今では|今でわ"),"C",
+REGEXMATCH(t,"学習時間|時間がな|時間の確保|時間が取れ|時間があまり|忙し"),"D",
+REGEXMATCH(t,"他の金融スクール|独学|スクール|他社|比較|セミナー|本で勉強|自分で"),"E",
+REGEXMATCH(t,"他の習い事|別の勉強|資格|試験"),"F",
+TRUE,"H")))))</pre>
+    <div class="meta"><button class="copybtn" data-c="m-formula">計算式をコピー</button><span class="len">上の表の人数は、この式と同じ条件で数えたものです。</span></div>
+
+    <h2>送る順番（4回に分けて・すべて夜21時）</h2>
+    <div class="h2sub">いちばん温度の高い197名から始めます。1回目の反応を見てから2回目に進みます。</div>
+    <div class="twrap"><table>
+      <tr><th>回</th><th>1通目を送る日</th><th>人数</th><th>送る相手</th><th>2通目（返信がない方だけ）</th></tr>
+      <tr><td>1</td><td>10/1（木）21:00</td><td class="n">197</td><td>「非常に思った」の方（全区分）</td><td>10/3（土）21:00</td></tr>
+      <tr><td>2</td><td>10/2（金）21:00</td><td class="n">366</td><td>「思った」の B</td><td>10/4（日）21:00</td></tr>
+      <tr><td>3</td><td>10/4（日）21:00</td><td class="n">375</td><td>「思った」の A</td><td>10/6（火）21:00</td></tr>
+      <tr><td>4</td><td>10/5（月）21:00</td><td class="n">284</td><td>「思った」の C・D・E・F・H</td><td>10/7（水）21:00</td></tr>
+    </table></div>
+    <div class="warn">1回目のあと、ブロック率がいつものSPOT配信の2倍を超えたら、2回目以降は止めて文面を見直します。</div>
+    <div class="good">各回とも、区分ごとに違う文面を送ります。たとえば1回目の197名なら、Aの60名にはAの文面、Bの79名にはBの文面です。</div>
+
+    <h2>送らない方</h2>
+    <div class="card"><ul>
+      <li>「③ 今はそっとしておいてほしい」と返した方は、配信停止のタグを付けて、今後の配信から外します。もう一度お誘いすることはしません。</li>
+      <li>自由記述に、はっきり断る言葉がある方が3名います（「見送りする、予定なし」など）。外すかどうかはABCashで判断してください。IDは別途お送りします。</li>
+      <li>ブロック済みの方と、この間に入会された方。</li>
+    </ul></div>
   </section>
 
-  <section class="view" id="v1"></section>
-  <section class="view" id="v2"></section>
-  <section class="view" id="v3"></section>
-  <section class="view" id="v4"></section>
-  <section class="view" id="v5"></section>
-  <section class="view" id="v6"></section>
-  <section class="view" id="v7"></section>
-  <section class="view" id="v8"></section>
+  <section class="view" id="v-A"></section>
+  <section class="view" id="v-B"></section>
+  <section class="view" id="v-C"></section>
+  <section class="view" id="v-D"></section>
+  <section class="view" id="v-E"></section>
+  <section class="view" id="v-F"></section>
+  <section class="view" id="v-H"></section>
 
-  <!-- ===== 共通2通目 ===== -->
-  <section class="view" id="v9">
-    <h2>共通2通目（2日後・返信がない方だけ）</h2>
-    <div class="h2sub">全区分共通。これで返信がない方は、それ以上は追いません。</div>
+  <!-- ===== 2通目 ===== -->
+  <section class="view" id="v-r2">
+    <h2>2通目（2日後・返信がない方だけ・全区分共通）</h2>
+    <div class="h2sub">これで返信がない方は、それ以上は追いません。</div>
     <div class="seg">
       <div>
-        <div class="window"><div class="lb">通知の窓に出る1行</div><div class="tx">{名前}さん、ちなみに一昨日お送りしたメッセージって、届いておりますか。。？</div></div>
-        <div class="phone">
-          <div class="who">ABCash</div>
-          <div class="bubble" id="m-r">{名前}さん、ちなみに一昨日お送りしたメッセージって、届いておりますか。。？
+        <div class="window"><div class="lb">通知の窓に出る1行</div><div class="tx">{名前}さん、ちなみに一昨日お送りしたメッセージって…</div></div>
+        <div class="phone"><div class="who">ABCash</div><div class="bubble" id="m-r2">{名前}さん、ちなみに一昨日お送りしたメッセージって、届いておりますか。。？
 
-ご返信がなかったので、配信エラーかな…と、心配になってご連絡してしまいました💦</div>
-        </div>
-        <button class="copybtn" data-c="m-r">この文面をコピー</button>
+ご返信がなかったので、配信エラーかな…と、心配になってご連絡してしまいました💦</div></div>
+        <div class="meta"><button class="copybtn" data-c="m-r2">この文面をコピー</button><span class="len" data-len="m-r2"></span></div>
       </div>
       <div class="side">
-        <div class="card"><div class="tt">ねらい</div>「届いていますか」の確認だけ。日程や案内は足さない（押し付け配信はブロックの原因）。</div>
-        <div class="card"><div class="tt">送らない方</div>1通目に③を返した方／既に返信のある方／ブロック済みの方</div>
+        <div class="card"><div class="tt">ねらい</div>届いているかの確認だけです。日程や案内は足しません。</div>
+        <div class="card"><div class="tt">送らない方</div>1通目に返信があった方（①②③すべて）、ブロック済みの方。</div>
       </div>
     </div>
   </section>
 
   <!-- ===== 返信への対応 ===== -->
-  <section class="view" id="v10">
+  <section class="view" id="v-reply">
     <h2>返信が来たときの返し方（全区分共通）</h2>
-    <div class="h2sub">番号で返ってきたら、その番号の文面をコピーして送ります。【日程】だけ差し込んでください。</div>
+    <div class="h2sub">番号で返ってきたら、その番号の文面をコピーして個別チャットで送ります。</div>
 
-    <div class="card">
-      <span class="key">① を選んだ方</span>
-      <div class="phone" style="margin-top:10px">
-        <div class="bubble" id="r1">{名前}さん、教えてくださってありがとうございます☺️
+    <div class="seg">
+      <div>
+        <div class="window"><div class="lb">① を選んだ方</div><div class="tx">空いている日程を5つ貼ってお送りします</div></div>
+        <div class="phone"><div class="who">ABCash</div><div class="bubble" id="m-1">{名前}さん、教えてくださってありがとうございます☺️
 
-直近ですと【日程1】か【日程2】が空いています🌷
-オンラインで30分、顔出しなしでも大丈夫です。
+{名前}さんはご予定いかがでしょうか？？
+今月ですと、こちらの日程が空いています！
 
-合う日がないときは、ご都合のよい曜日だけ教えてくださいね。
-お話しできるのを楽しみにしておりますっ！</div>
+＝＝＝＝＝＝＝
+10/◯（◯）◯◯:◯◯〜
+10/◯（◯）◯◯:◯◯〜
+10/◯（◯）◯◯:◯◯〜
+10/◯（◯）◯◯:◯◯〜
+10/◯（◯）◯◯:◯◯〜
+＝＝＝＝＝＝＝
+
+オンラインで30分、顔出しなしでも大丈夫です🌷
+ご都合の良い日程を教えてくださいね。</div></div>
+        <div class="meta"><button class="copybtn" data-c="m-1">①の返信をコピー</button><span class="len" data-len="m-1"></span></div>
       </div>
-      <button class="copybtn" data-c="r1">①の返信をコピー</button>
-      <div class="warn" style="margin-top:10px">提示する枠は2つまで。満席のときは「満席です」で返さず、別の枠を1つこちらから出す。</div>
+      <div class="side">
+        <div class="card"><div class="tt">日程の選び方</div><ul>
+          <li>送る直前に予約カレンダーで空きを確かめて、実際に空いている枠だけを貼ります。</li>
+          <li>会社員の方には平日の夜と土日を貼ります。パート・主婦・育休中の方には昼と夜を混ぜて貼ります。</li>
+          <li>日付と曜日は、貼る前に必ずカレンダーで照らし合わせます。</li>
+        </ul></div>
+        <div class="card"><div class="tt">気をつけること</div><ul>
+          <li>Aの方で「家族と一緒に」を選んだ方には、最後に「ご家族とご一緒でも大丈夫です」を1行足します。ABCashで同席OKの確認が取れてからにしてください。</li>
+          <li>Bの方で、自由に使えるお金が「ギリギリ」「借金返済中」の方には、支払い方法や分割の話をこちらから出しません。</li>
+        </ul></div>
+      </div>
     </div>
 
-    <div class="card">
-      <span class="key">② を選んだ方</span>
-      <div class="phone" style="margin-top:10px">
-        <div class="bubble" id="r2">{名前}さん、正直に教えてくださってありがとうございます☺️
-
+    <div class="seg" style="margin-top:22px">
+      <div>
+        <div class="window"><div class="lb">② を選んだ方</div><div class="tx">本人のペースに任せます</div></div>
+        <div class="phone"><div class="who">ABCash</div><div class="bubble" id="m-2">{名前}さん、正直に教えてくださってありがとうございます☺️
 では{名前}さんのペースで大丈夫です🌷
 動けそうになったら、このLINEに一言だけ送ってくださいね。
-
-その時にお話しできるのを楽しみにしておりますっ！</div>
+その時にお話しできるのを楽しみにしておりますっ！</div></div>
+        <div class="meta"><button class="copybtn" data-c="m-2">②の返信をコピー</button></div>
       </div>
-      <button class="copybtn" data-c="r2">②の返信をコピー</button>
-      <div class="good" style="margin-top:10px">これで終わり。こちらから追わない。</div>
+      <div class="side"><div class="card"><div class="tt">そのあと</div>これで終わりです。こちらからは追いません。Aの②「まず私だけでもう一度相談したい」は例外です。これは①と同じく日程をお送りします。</div></div>
     </div>
 
-    <div class="card">
-      <span class="key">③ を選んだ方</span>
-      <div class="phone" style="margin-top:10px">
-        <div class="bubble" id="r3">{名前}さん、教えてくださってありがとうございます☺️
-
+    <div class="seg" style="margin-top:22px">
+      <div>
+        <div class="window"><div class="lb">③ を選んだ方</div><div class="tx">お礼だけ返して、配信から外します</div></div>
+        <div class="phone"><div class="who">ABCash</div><div class="bubble" id="m-3">{名前}さん、教えてくださってありがとうございます☺️
 承知しました。こちらからのご連絡はいったんお休みしますね🌷
-またお金のことを考えたくなったときに、このLINEに一言だけ送ってください。</div>
+またお金のことを考えたくなったときに、このLINEに一言だけ送ってください。</div></div>
+        <div class="meta"><button class="copybtn" data-c="m-3">③の返信をコピー</button></div>
       </div>
-      <button class="copybtn" data-c="r3">③の返信をコピー</button>
-      <div class="warn" style="margin-top:10px">以後の配信対象から外す（2通目も送らない）。</div>
-    </div>
-
-    <h2>ABCash側で決めていただくこと（2点）</h2>
-    <div class="card">
-      <li>Bの「無理のない始め方」が、分割払いや価格の話まで含むかどうか。含む場合は条件が決まってから送付</li>
-      <li>「個別のご相談（30分・オンライン）」の正式な呼び名（個別相談会など）。決まれば全文面の該当箇所を差し替え</li>
+      <div class="side"><div class="card"><div class="tt">そのあと</div>配信停止のタグを付けて、以後のSPOT配信・2通目の対象から外します。本人から連絡が来るまで、こちらからはお誘いしません。</div></div>
     </div>
   </section>
 
-  <div class="foot">株式会社Merone｜2026年9月25日作成（v2・くみこ校正反映）</div>
+  <!-- ===== ABCashに確認 ===== -->
+  <section class="view" id="v-ask">
+    <h2>送る前にABCashで決めていただくこと（4点）</h2>
+    <div class="card"><ol>
+      <li>①の方にご案内する「オンラインで30分」の場の正式な呼び名です。体験会をもう一度受けていただくのか、個別のご相談なのかを決めてください。決まれば①の返信の文言を合わせます。</li>
+      <li>Aの方のご家族の同席がOKかどうかです。OKでなければ、Aの1通目にある「ご家族と一緒に聞いていただける」の2行と、①の選択肢の言葉を差し替えます。</li>
+      <li>自由記述ではっきり断っている3名を外すかどうかです。</li>
+      <li>Bの方から費用の質問が来たときに、分割や支払い方法の話まで出してよいかどうかです。</li>
+    </ol></div>
+    <div class="good">名前の差し込みは、文面の {名前} を配信ツールの名前変数に置き換えてください。LINEの表示名が絵文字や英字の方もいるので、1回目の前にテスト送信で見え方を確かめてください。</div>
+  </section>
+
+  <p class="foot">株式会社Merone｜2026年9月30日作成（v3・1,222名の最新シートに合わせて作り直し）</p>
 </div>
 
 <script>
 (function(){
 "use strict";
+var OPEN="{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️";
+var WIN="{名前}さん、最近は異常気象や大雨が続いているので…";
 var SEG=[
-{k:"A",title:"家族・パートナーの同意が必要",win:"{名前}さん、最近は異常気象や大雨が続いているので…",
- aim:"冒頭は全区分共通の近況うかがい。体験会で本人が言った「家族に相談してから」を覚えている、と伝えて近況を聞く。家族と一緒に聞ける枠はその後に添える。",
- note:"自由記述に「主人が反対」「妻に相談」がある方もここ。",
- msg:`{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️
-
-体験会の時に「ご家族にご相談してから…」とお話しされていたのがとても印象的だったので、
-その後どうなったのかなと気になり、お声がけさせていただいた次第です。。🥺
-
-もしまだでしたら、ご家族と一緒に聞いていただける
-30分のオンラインの時間もご用意できます。
-その場で決めていただく必要はありません。
-
-いまのご状況に近いものを、番号で教えてくださいませっ💡
-
-① 家族と一緒に聞いてみたい！！
-② まず私だけでもう一度相談したい。。！
-③ 今はそっとしておいてほしい`},
-{k:"B",title:"受講料が高い・費用対効果",win:"{名前}さん、最近は異常気象や大雨が続いているので…",
- aim:"冒頭は共通。費用を正直に言ってくれたことへの感謝から、いまお金の勉強を進めているかの近況を聞く。売り込みや価格の話は出さない。",
- note:"分割や価格の具体はABCash確定後。「借金返済中」の方には支払いの話を出さない。",
- msg:`{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️
-
-体験会の時に一番気になっていらしたのは費用のところだったと思うのですが、
-あの時、正直に教えてくださって本当に嬉しかったです。。🥺
-
-ちなみに今は、他のスクールに入られたり、
-その後お金の勉強をされていらっしゃったりするのかなと思い、
-個別にお声がけさせていただきました。
-
-いまのご状況に近いものを、番号で教えてくださいませっ💡
-
-① 実はまだ何も始められていない。。！
-② 他で勉強を始めている！！
-③ 今はそっとしておいてほしい`},
-{k:"C",title:"今は開始のタイミングではない",win:"{名前}さん、最近は異常気象や大雨が続いているので…",
- aim:"冒頭は共通。「今はタイミングじゃない」を覚えている、と伝え、今年の残りが3ヶ月を切る中で状況が落ち着いたかを聞く。",
- note:"自由記述に出産・手術・進学・繁忙期がある方もここ。",
- msg:`{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️
-
-体験会の時は「今はタイミングじゃない」とおっしゃっていたことが
-とても印象的だったので覚えています。
-
-今年も残り3ヶ月を切っていく中で、
-少しご状況は落ち着かれたのかなと気になり、個別にご連絡させていただきました✨
-
-いまのご状況に近いものを、番号で教えてくださいませっ💡
-
-① 少し落ち着いてきた！！
-② まだバタバタしている。。！
-③ 今はそっとしておいてほしい`},
-{k:"D",title:"学習時間の確保が困難",win:"{名前}さん、最近は異常気象や大雨が続いているので…",
- aim:"冒頭は共通。「時間が取れるか不安」を覚えている、と伝え、仕事や身の回りの環境に変化があったかを聞く。",
+{k:"A",title:"家族・パートナーの同意が必要",
+ aim:"アンケートで家族の意見を大事にしたいと書いてくださったことを受け止めて、その後を聞きます。家族と一緒に聞ける場があることだけ添えます。",
+ note:"「ご家族と一緒に」の2行は、ABCashで同席OKの確認が取れてから送ってください。",
+ r:["お礼と空き日程5つ","お礼と空き日程5つ（一人で相談したい方）","お礼だけ。配信から外す"],
+ body:"体験会のあとのアンケートで、ご家族やパートナーさんのご意見も大事にしたいと教えてくださっていたのが印象に残っていて、\nその後どうなったのかなと気になっておりました。。🥺\n\nご家族と一緒に聞いていただける\n30分のオンラインの時間もご用意できます。\nその場で決めていただく必要はありません。\n\nいまのご状況に近いものを、番号で教えてくださいませっ💡\n\n① 家族と一緒に聞いてみたい！！\n② まず私だけでもう一度相談したい。。！\n③ 今はそっとしておいてほしい"},
+{k:"B",title:"受講料が高い・費用対効果",
+ aim:"費用のことを正直に書いてくれたことへのお礼から入ります。そのあと、お金の勉強が進んでいるかを聞くだけにします。価格や支払いの話はこの1通では出しません。",
+ note:"自由に使えるお金が「ギリギリ」「借金返済中」の方が多い区分です。返信が来ても、こちらから支払いの話は出しません。",
+ r:["お礼と空き日程5つ","お礼だけ。こちらからは追わない","お礼だけ。配信から外す"],
+ body:"体験会のあとのアンケートで、費用のことを正直に書いてくださっていたのが、とても嬉しかったです。。🥺\n\nちなみに今は、他のスクールに入られたり、\nその後お金の勉強を進められていたりするのかなと思い、\nご連絡させていただきました。\n\nいまのご状況に近いものを、番号で教えてくださいませっ💡\n\n① 実はまだ何も始められていない。。！\n② 他で勉強を始めている！！\n③ 今はそっとしておいてほしい"},
+{k:"C",title:"今は開始のタイミングではない",
+ aim:"「今はタイミングではない」と書いてくれたことを覚えている、と伝えます。今年が残り3ヶ月になったことをきっかけに、状況が落ち着いたかを聞きます。",
+ note:"自由記述に出産・手術・体調がある方もここに入ります。体調のことには触れず、状況だけを聞きます。",
+ r:["お礼と空き日程5つ","お礼だけ。こちらからは追わない","お礼だけ。配信から外す"],
+ body:"体験会のあとのアンケートで、「今は始めるタイミングではない」と教えてくださっていたので、ずっと気になっておりました。\n\n今年も残り3ヶ月となりましたが、\n少しご状況は落ち着かれましたか？✨\n\nいまのご状況に近いものを、番号で教えてくださいませっ💡\n\n① 少し落ち着いてきた！！\n② まだバタバタしている。。！\n③ 今はそっとしておいてほしい"},
+{k:"D",title:"学習時間の確保が困難",
+ aim:"学ぶ時間を心配していたことを覚えている、と伝えます。仕事や身の回りに変化があったかを聞きます。",
  note:"",
- msg:`{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️
-
-体験会の時、「時間が取れるか不安」とご心配されていらっしゃいましたね。
-お忙しい中、あの日は本当にありがとうございました。。🥺
-
-その後、{名前}さんのお仕事や身の回りの環境に変化があったのかなと気になり、
-ご連絡させていただきました。
-
-いまのご状況に近いものを、番号で教えてくださいませっ💡
-
-① 少し時間ができてきた！！
-② 相変わらず忙しい。。！
-③ 今はそっとしておいてほしい`},
-{k:"E",title:"他の金融スクールを検討・独学で十分",win:"{名前}さん、最近は異常気象や大雨が続いているので…",
- aim:"冒頭は共通。比較や独学を否定せず、検討していたスクールやご自身の学びが進んでいるかを聞く。進んでいない方だけを拾う。",
- note:"他社名は出さない。",
- msg:`{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️
-
-体験会の後、他の学び方も検討されていたかと思います。
-その後、ご検討されていたスクールや、ご自身での学びは進められていらっしゃいますか？
-
-もしまだ進められていらっしゃらなければ、
-何かお力添えできるかなと思い、お声がけさせていただきました✨
-
-いまのご状況に近いものを、番号で教えてくださいませっ💡
-
-① 正直、まだ進んでいない。。！
-② 順調に進んでいる！！
-③ 今はそっとしておいてほしい`},
-{k:"F",title:"他の習い事（副業・語学など）を優先",win:"{名前}さん、最近は異常気象や大雨が続いているので…",
- aim:"冒頭は共通。優先していた学びが順調かを聞き、一区切りついた方だけを拾う。Eと同じ型。",
+ r:["お礼と空き日程5つ","お礼だけ。こちらからは追わない","お礼だけ。配信から外す"],
+ body:"体験会のあとのアンケートで、学ぶ時間を取れるかを気にされていたのが印象に残っておりました。\n\nその後、{名前}さんのお仕事や身の回りの環境に\n変化はありましたか？✨\n\nいまのご状況に近いものを、番号で教えてくださいませっ💡\n\n① 少し時間ができてきた！！\n② 相変わらず忙しい。。！\n③ 今はそっとしておいてほしい"},
+{k:"E",title:"他のスクールと比較・独学",
+ aim:"比較や独学を否定しません。その学びが進んでいるかを聞いて、足踏みしている方だけを拾います。",
+ note:"他社の名前は出しません。",
+ r:["お礼と空き日程5つ","お礼だけ。こちらからは追わない","お礼だけ。配信から外す"],
+ body:"体験会のあとは、他の学び方もご検討されていたかと思います。\nその後、ご検討されていたスクールや、ご自身での学びは進められていらっしゃいますか？\n\nもし足踏みされていらっしゃれば、\n何かお力添えできるかなと思い、お声がけさせていただきました✨\n\nいまのご状況に近いものを、番号で教えてくださいませっ💡\n\n① 正直、あまり進んでいない。。！\n② 順調に進んでいる！！\n③ 今はそっとしておいてほしい"},
+{k:"F",title:"他の習い事・資格の勉強を優先",
+ aim:"優先していた学びが順調かを聞きます。一区切りついた方だけを拾います。Eと同じ考え方です。",
  note:"",
- msg:`{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️
-
-体験会の時は、ほかに優先したい学びがあるとのことでしたね。
-その後、そちらは順調に進んでいらっしゃいますか？
-
-もし一区切りついていらっしゃれば、
-何かお力添えできるかなと思い、お声がけさせていただきました✨
-
-いまのご状況に近いものを、番号で教えてくださいませっ💡
-
-① 一区切りついた！！
-② まだ途中。。！
-③ 今はそっとしておいてほしい`},
-{k:"G",title:"内容が期待と相違・マンツーマンが合わない",win:"{名前}さん、最近は異常気象や大雨が続いているので…",
- aim:"冒頭は共通。売り込まない。「本当は何を知りたかったか」を聞かせてほしい、という姿勢だけ。②にLINEでの一言返信を置く。",
- note:"ここで得た声はLP・体験会の改善材料。",
- msg:`{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️
-
-体験会の内容が、{名前}さんの期待とは少し違っていたかと思います。
-率直に教えてくださって、ありがとうございました。。🥺
-
-もしよければ「本当はどんなことを知りたかったか」を
-30分だけ聞かせていただけませんか。
-売り込みは一切ありません。今後の参考にさせていただきたいだけです。
-
-番号で教えてくださいませっ💡
-
-① 話してもいい！！
-② 一言だけならこのLINEで。。！
-③ 今はそっとしておいてほしい`},
-{k:"H",title:"考えたい・即決できなかった",win:"{名前}さん、最近は異常気象や大雨が続いているので…",
- aim:"冒頭は共通。「持ち帰って考える」判断を肯定してから、心境や環境の変化を聞く。",
- note:"その他（自由記載）のみで、上のA〜Gに当たらない方。",
- msg:`{名前}さん、最近は異常気象や大雨が続いているので、その後お元気だったかなと気になり、個別にお声がけさせていただきました☺️
-
-体験会の後、「一度持ち帰って考えたい」とおっしゃっていましたね。
-大事なことなので、その判断は正しいと思います。
-
-その後、{名前}さんの心境や環境に変化があったのかなと思い、
-ふとご連絡させていただきました✨
-
-いまのご状況に近いものを、番号で教えてくださいませっ💡
-
-① 聞きたいことがある！！
-② もう少し考えたい。。！
-③ 今はそっとしておいてほしい`}
+ r:["お礼と空き日程5つ","お礼だけ。こちらからは追わない","お礼だけ。配信から外す"],
+ body:"体験会のあとのアンケートで、ほかに優先したい学びがあると教えてくださっていましたね。\nその後、そちらは順調に進んでいらっしゃいますか？\n\nもし一区切りついていらっしゃれば、\n何かお力添えできるかなと思い、お声がけさせていただきました✨\n\nいまのご状況に近いものを、番号で教えてくださいませっ💡\n\n① 一区切りついた！！\n② まだ途中。。！\n③ 今はそっとしておいてほしい"},
+{k:"H",title:"考えたい・即決できなかった",
+ aim:"すぐに決めなかった判断を肯定してから、気持ちや環境の変化を聞きます。本人が書いていないことを「おっしゃっていた」とは書きません。",
+ note:"自由記述が「検討したい」「即決できなかった」「特になし」などの方です。",
+ r:["お礼と空き日程5つ","お礼だけ。こちらからは追わない","お礼だけ。配信から外す"],
+ body:"体験会のあと、大事なことだからこそ、すぐには決めずに考えたいお気持ちもあったかと思います。\nその判断は、とても素敵だと思います。\n\nその後、{名前}さんのお気持ちや環境に変化があったのかなと思い、\nふとご連絡させていただきました✨\n\nいまのご状況に近いものを、番号で教えてくださいませっ💡\n\n① 聞いてみたいことがある！！\n② もう少し考えたい。。！\n③ 今はそっとしておいてほしい"}
 ];
-function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
-SEG.forEach(function(s,i){
-  var v=document.getElementById("v"+(i+1));
-  var id="m-"+s.k;
+var COUNT={A:[60,375],B:[79,366],C:[31,151],D:[11,58],E:[9,35],F:[1,12],H:[6,28]};
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+SEG.forEach(function(s){
+  var v=document.getElementById("v-"+s.k), id="m-"+s.k, c=COUNT[s.k];
+  var msg=OPEN+"\n\n"+s.body;
   v.innerHTML='<h2><span class="key">'+s.k+'</span>　'+esc(s.title)+'</h2>'
-   +'<div class="h2sub">個票の理由が「'+esc(s.title)+'」の方に、この1通だけ送ります。</div>'
+   +'<div class="h2sub">'+(c[0]+c[1])+'名（非常に思った '+c[0]+'名・思った '+c[1]+'名）に、この1通を送ります。</div>'
    +'<div class="seg"><div>'
-   +'<div class="window"><div class="lb">通知の窓に出る1行</div><div class="tx">'+esc(s.win)+'</div></div>'
-   +'<div class="phone"><div class="who">ABCash</div><div class="bubble" id="'+id+'">'+esc(s.msg)+'</div></div>'
-   +'<button class="copybtn" data-c="'+id+'">この文面をコピー</button>'
+   +'<div class="window"><div class="lb">通知の窓に出る1行</div><div class="tx">'+esc(WIN)+'</div></div>'
+   +'<div class="phone"><div class="who">ABCash</div><div class="bubble" id="'+id+'">'+esc(msg)+'</div></div>'
+   +'<div class="meta"><button class="copybtn" data-c="'+id+'">この文面をコピー</button><span class="len" data-len="'+id+'"></span></div>'
    +'</div><div class="side">'
    +'<div class="card"><div class="tt">ねらい</div>'+esc(s.aim)+'</div>'
    +(s.note?'<div class="card"><div class="tt">注意</div>'+esc(s.note)+'</div>':'')
-   +'<div class="card"><div class="tt">返信が来たら</div><div class="reply"><b>①</b><span>お礼＋直近2枠を提示（返信タブ）</span><b>②</b><span>お礼＋本人のペースで。追わない</span><b>③</b><span>お礼のみ。配信対象から外す</span></div></div>'
+   +'<div class="card"><div class="tt">返信が来たら</div><div class="reply"><b>①</b><span>'+esc(s.r[0])+'</span><b>②</b><span>'+esc(s.r[1])+'</span><b>③</b><span>'+esc(s.r[2])+'</span></div></div>'
    +'</div></div>';
 });
-document.querySelectorAll(".copybtn").forEach(function(b){
-  b.addEventListener("click",function(){
-    var el=document.getElementById(b.dataset.c);
-    navigator.clipboard.writeText(el.textContent).then(function(){
-      var t=b.textContent;b.textContent="コピーしました";setTimeout(function(){b.textContent=t;},1400);
-    });
-  });
+document.querySelectorAll("[data-len]").forEach(function(el){
+  var t=document.getElementById(el.dataset.len).textContent.replace(/\{名前\}/g,"");
+  el.textContent="本文 約"+t.replace(/\s/g,"").length+"字（{名前}を除く）";
+});
+function copyText(t,done){
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){fallback(t);done();});}
+  else{fallback(t);done();}
+}
+function fallback(t){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(a);}
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".copybtn"); if(!b) return;
+  var el=document.getElementById(b.dataset.c), orig=b.textContent;
+  copyText(el.textContent,function(){b.textContent="コピーしました";setTimeout(function(){b.textContent=orig;},1400);});
 });
 var tabs=document.querySelectorAll(".tab");
 tabs.forEach(function(t){
   t.addEventListener("click",function(){
     tabs.forEach(function(x){x.setAttribute("aria-selected",x===t?"true":"false");});
-    for(var i=0;i<11;i++){document.getElementById("v"+i).classList.toggle("on",String(i)===t.dataset.v);}
+    document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("on",v.id==="v-"+t.dataset.v);});
     window.scrollTo(0,0);
   });
 });
 })();
 </script>
+</body>
+</html>
