@@ -55,6 +55,7 @@
     <button class="tab" data-v="1" type="button">CTA・LP</button>
     <button class="tab" data-v="2" type="button">関わり別の声</button>
     <button class="tab" data-v="3" type="button">自由記述</button>
+    <button class="tab" data-v="5" type="button">見出し・AI・特典</button>
     <button class="tab" data-v="4" type="button">設問一覧</button>
   </div>
   <section class="view on" id="v0"></section>
@@ -62,6 +63,7 @@
   <section class="view" id="v2"></section>
   <section class="view" id="v3"></section>
   <section class="view" id="v4"></section>
+  <section class="view" id="v5"></section>
 </div>
 <script>
 (function(){
@@ -70,7 +72,6 @@ var U="https://inrvprlyobghviklulcv.supabase.co/rest/v1/ailab_notes";
 var K="sb_publishable_ZrCNcsRHMci-l7Fns8QtIA_X22XZGJp";
 var PW="merone2026";
 var ADS={
- b1:{name:"漫画5コマ「私のことだけずっと後回し」",img:"img/b1.jpg"},
  b2:{name:"実写「動画でお金を学んでも…諦めたあなたへ」",img:"img/b2.jpg"},
  b3:{name:"実写「お金のスクールで変われず…」",img:"img/b3.jpg"},
  c1:{name:"カルーセル5枚「今日こそ→寝落ち→学び方を知る」",img:"img/c1_1.jpg"},
@@ -93,7 +94,7 @@ function open(){
 }
 document.querySelectorAll(".tab").forEach(function(t){t.addEventListener("click",function(){
   document.querySelectorAll(".tab").forEach(function(x){x.classList.toggle("on",x===t);});
-  for(var i=0;i<5;i++)document.getElementById("v"+i).classList.toggle("on",String(i)===t.dataset.v);
+  for(var i=0;i<6;i++)document.getElementById("v"+i).classList.toggle("on",String(i)===t.dataset.v);
 });});
 function pct(a,b){return b?Math.round(a/b*100):0;}
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
@@ -114,7 +115,7 @@ function load(){
   fetch(U+"?member_id=eq.survey_abcash_banner&select=id,created_at,worry&order=id.asc",{headers:{apikey:K,Authorization:"Bearer "+K}})
    .then(function(r){return r.json();}).then(function(list){
     var seen={};
-    list.forEach(function(x){try{var p=JSON.parse(x.worry);if(p.v!==2)return;if(p.answers&&/^TEST/.test(p.answers.banner_idea||""))return;seen[p.rid]=p;}catch(e){}});
+    list.forEach(function(x){try{var p=JSON.parse(x.worry);if(p.v!==3)return;if(p.answers&&/^TEST/.test(p.answers.banner_idea||""))return;seen[p.rid]=p;}catch(e){}});
     ALL=Object.keys(seen).map(function(k){return seen[k];});
     draw();
    }).catch(function(){document.getElementById("meta").textContent="読み込みに失敗しました";});
@@ -123,10 +124,10 @@ function draw(){
   var rows=filt();
   var byRel=REL.map(function(r){return ALL.filter(function(x){return x.answers.rel===r;}).length;});
   document.getElementById("meta").textContent="回答 "+ALL.length+"件（表示中 "+rows.length+"件）｜"+REL.map(function(r,i){return r.replace(/（.*?）/,"")+" "+byRel[i];}).join("・")+"｜"+new Date().toLocaleString("ja-JP")+" 時点";
-  v0(rows);v1(rows);v2(rows);v3(rows);v4();
+  v0(rows);v1(rows);v2(rows);v3(rows);v4();v5(rows);
 }
 function v0(rows){
-  var h='<div class="card"><b>見方</b>　表示＝その広告を見た人数（1人4点ずつ割り付け）／<b>クリック率</b>＝タップした人÷表示／<b>体験会転換</b>＝「予約まで進みたい」÷タップした人／<b>体験会到達</b>＝「予約まで進みたい」÷表示／<b>期待ズレ</b>＝タップ先を「動画だけ」「売られそう」と思った人÷表示。<br>判定：クリック率が中央値以上で体験会転換が中央値未満→<span class="tag t-click">クリック止まり</span>、どちらも中央値以上→<span class="tag t-good">体験会まで行く</span>。広告どうしの順位で見てください。</div>';
+  var h='<div class="card"><b>見方</b>　表示＝その広告を見た人数（実写「動画で…」は全員、残り5点から3点を割り付け）／<b>クリック率</b>＝タップした人÷表示／<b>体験会転換</b>＝「予約まで進みたい」÷タップした人／<b>体験会到達</b>＝「予約まで進みたい」÷表示／<b>期待ズレ</b>＝タップ先を「動画だけ」「売られそう」と思った人÷表示。<br>判定：クリック率が中央値以上で体験会転換が中央値未満→<span class="tag t-click">クリック止まり</span>、どちらも中央値以上→<span class="tag t-good">体験会まで行く</span>。広告どうしの順位で見てください。</div>';
   var st=Object.keys(ADS).map(function(id){
     var n=0,tap=0,trial=0,gap=0,seen=0,best=0,bestT=0;
     rows.forEach(function(r){var a=r.answers["ad_"+id+"_react"];if(!a)return;n++;
@@ -179,10 +180,52 @@ function v3(rows){
   var any=false;rows.forEach(function(r){var t=(r.answers.lp_comment||"").trim();if(!t)return;any=true;h+='<div class="free">'+esc(t)+' <span class="muted">（'+esc((r.answers.rel||"").replace(/（.*?）/,""))+'）</span></div>';});
   document.getElementById("v3").innerHTML=h+(any?'':'<span class="muted">まだありません</span>')+'</div>';
 }
+function v5(rows){
+  var n=rows.length,h='';
+  h+='<div class="card"><b>見出し診断</b>　実写「動画でお金を学んでも、何も変わらず、諦めたあなたへ。」は全員に見せています。読めたか・自分ごとか・どう感じたか・代わりの見出しならどれか、の順です。</div>';
+  h+=table("「動画で」は何の動画だと思ったか",count(rows,"hl_video"),n);
+  h+=table("この見出しは自分に当てはまるか",count(rows,"hl_fit"),n);
+  h+=table("読んでどう感じたか",count(rows,"hl_read"),n);
+  h+=table("同じ写真で見出しを変えるなら一番押したいもの（順番ランダム）",count(rows,"hl_alt"),n);
+  h+='<h2>自分ならこう書く（任意）</h2><div class="card">';
+  var any=false;rows.forEach(function(r){var t=(r.answers.hl_own||"").trim();if(!t)return;any=true;h+='<div class="free">'+esc(t)+' <span class="muted">（'+esc((r.answers.rel||"").replace(/（.*?）/,""))+'）</span></div>';});
+  h+=(any?'':'<span class="muted">まだありません</span>')+'</div>';
+
+  h+='<div class="card" style="margin-top:22px"><b>AIっぽさ</b>　4つの広告への反応をすべて聞き終えたあとで、「どうやって作られたと思うか」をまとめて聞いています（先に聞くと反応が変わるため）。<br>人＝「人が作ったと思う」「たぶん人」、AI＝「AIで作ったと思う」「たぶんAI」。<b>タップ率</b>＝タップした人÷その判定をした人。</div>';
+  h+='<h2>広告別：AIだと思った人の割合と、判定別のタップ率</h2><div class="twrap"><table><tr><th></th><th>広告</th><th>表示</th><th>AIと思った</th><th>人と思った</th><th>わからない</th><th>タップ率（AIと思った人）</th><th>タップ率（人と思った人）</th></tr>';
+  Object.keys(ADS).forEach(function(id){
+    var c={ai:0,hu:0,un:0,n:0},t={ai:[0,0],hu:[0,0]};
+    rows.forEach(function(r){var j=r.answers["ai_"+id],a=r.answers["ad_"+id+"_react"];if(!j||!a)return;c.n++;
+      var k=(j==="AIで作ったと思う"||j==="たぶんAI")?"ai":(j==="わからない"?"un":"hu");c[k]++;
+      if(k!=="un"){t[k][1]++;if(a===R[2]||a===R[3])t[k][0]++;}});
+    h+='<tr><td><img src="'+ADS[id].img+'" alt=""></td><td>'+ADS[id].name+'</td><td>'+c.n+'</td><td><b>'+pct(c.ai,c.n)+'%</b></td><td>'+pct(c.hu,c.n)+'%</td><td>'+pct(c.un,c.n)+'%</td><td>'+pct(t.ai[0],t.ai[1])+'%（'+t.ai[1]+'人）</td><td>'+pct(t.hu[0],t.hu[1])+'%（'+t.hu[1]+'人）</td></tr>';
+  });
+  h+='</table></div>';
+  var lo=0,hi=0,same=0,m=0;
+  rows.forEach(function(r){var a=[0,0],b=[0,0];Object.keys(ADS).forEach(function(id){var j=r.answers["ai_"+id],x=r.answers["ad_"+id+"_react"];if(!j||!x||j==="わからない")return;var tap=(x===R[2]||x===R[3])?1:0;if(j==="AIで作ったと思う"||j==="たぶんAI"){a[0]+=tap;a[1]++;}else{b[0]+=tap;b[1]++;}});
+    if(!a[1]||!b[1])return;m++;var ra=a[0]/a[1],rb=b[0]/b[1];if(ra<rb)lo++;else if(ra>rb)hi++;else same++;});
+  h+='<div class="card"><b>同じ人の中での比較</b>（AIと思った広告と、人と思った広告の両方を見た人 '+m+'人）：AIと思った広告のほうがタップ率が<b>低い</b> '+lo+'人／同じ '+same+'人／高い '+hi+'人。<br>「気持ちが下がる」と答えた人でも、ここで差がなければ「言うほど気にしていない」と読めます。</div>';
+  h+=table("AIかどうか、ふだん見分けられるか",count(rows,"ai_can"),n);
+  h+=table("「AIで作ったな」と感じたとき、タップしたい気持ちは",count(rows,"ai_attitude"),n);
+  var x={};rows.forEach(function(r){var a=r.answers.ai_attitude;if(!a)return;var lo2=0,m2=0;Object.keys(ADS).forEach(function(id){var j=r.answers["ai_"+id],y=r.answers["ad_"+id+"_react"];if(!j||!y)return;if(j==="AIで作ったと思う"||j==="たぶんAI"){m2++;if(y===R[2]||y===R[3])lo2++;}});x[a]=x[a]||[0,0];x[a][0]+=lo2;x[a][1]+=m2;});
+  h+='<h2>言っていること × 実際の反応</h2><div class="twrap"><table><tr><th>「AIだと感じたら気持ちは」の答え</th><th>その人たちがAIと判定した広告の数</th><th>そのうちタップした</th></tr>';
+  Object.keys(x).forEach(function(k){h+='<tr><td>'+esc(k)+'</td><td>'+x[k][1]+'</td><td><b>'+pct(x[k][0],x[k][1])+'%</b></td></tr>';});
+  h+='</table></div>';
+  h+=table("AIだと感じる手がかり（2つまで）",count(rows,"ai_cue"),n);
+
+  h+='<div class="card" style="margin-top:22px"><b>もらえるもの</b>　実写2枚はボタンが違います。「動画で…」＝<b>詳細を見る</b>、「スクールで…」＝<b>LINEで無料動画3本を受け取る</b>。特典を大事だと言う人ほど「詳細を見る」でタップが減るか、を見ます。</div>';
+  h+=table("「何がもらえるか」が書いてあることは大事か",count(rows,"gift_imp"),n);
+  var y={};rows.forEach(function(r){var g=r.answers.gift_imp;if(!g)return;y[g]=y[g]||{b2:[0,0],b3:[0,0]};["b2","b3"].forEach(function(id){var a=r.answers["ad_"+id+"_react"];if(!a)return;y[g][id][1]++;if(a===R[2]||a===R[3])y[g][id][0]++;});});
+  h+='<h2>特典の大事さ × 実写2枚のタップ率</h2><div class="twrap"><table><tr><th>特典の大事さ</th><th>「詳細を見る」のタップ率</th><th>「無料動画3本」のタップ率</th></tr>';
+  ["とても大事","まあ大事","あまり大事でない","気にしていない"].forEach(function(g){if(!y[g])return;h+='<tr><td>'+g+'</td><td>'+pct(y[g].b2[0],y[g].b2[1])+'%（'+y[g].b2[1]+'人）</td><td>'+pct(y[g].b3[0],y[g].b3[1])+'%（'+y[g].b3[1]+'人）</td></tr>';});
+  h+='</table></div>';
+  h+=table("特典について書いてあると安心なこと（2つまで）",count(rows,"gift_want"),n);
+  document.getElementById("v5").innerHTML=h;
+}
 function v4(){
   var Q=[
    ["全員","ABCash（お金のトレーニングスクール）との関わりは？","入会した（受講中・卒業）／体験会は受けたが入会しなかった／体験会に申し込んだが行かなかった／知っているが申し込んだことはない／知らなかった"],
-   ["広告4点（1人4点・順番ランダム）","（申し込んだ人は「申し込む前のあなた」、それ以外は「あなた」）なら、この広告が流れてきたらどうしますか？","スルーする／止まって見る（タップはしない）／タップして、無料動画だけ受け取る／タップして、無料体験会の予約まで進みたい"],
+   ["広告4点（実写「動画で…」は全員＋残り5点から3点・順番ランダム。漫画5コマは9/30に取り下げ）","（申し込んだ人は「申し込む前のあなた」、それ以外は「あなた」）なら、この広告が流れてきたらどうしますか？","スルーする／止まって見る（タップはしない）／タップして、無料動画だけ受け取る／タップして、無料体験会の予約まで進みたい"],
    ["広告4点","この広告をタップした先に、何があると思いますか？","無料動画がもらえるだけ／お金の情報がLINEで届く／人に相談できる場がある／何かを売られそう／よくわからない"],
    ["広告4点","この広告を見たことはありますか？","ある／ない／わからない"],
    ["比較","1つだけ押すなら、どれ？／押したあと、無料体験会の予約まで進みそうなのはどれ？","見た4点のサムネイル／どれもない"],
@@ -197,6 +240,17 @@ function v4(){
    ["ボタンと中身","ボタンがこの中にあったら押すのはどれ？（順番ランダム）","無料動画3本を受け取る／とりあえず無料で聞いてみる／自分のタイプを知る／60分の無料体験会を予約する／どれも押さない"],
    ["ボタンと中身","無料体験会に申し込みたくなるのは、どれがあるとき？（2つまで）","無料動画3本／タイプに合ったお金の整え方／毎月いくら使っていいか／受講生の実例／参加特典／金融商品の販売がない／顔出しなし・聞くだけ／どれもない"],
    ["必須の自由記述","あなたなら、どんなバナー（広告）だったら、ABCashの無料体験会に申し込みたくなりますか？","自由記述（5文字以上）"],
+   ["見出し診断（実写「動画で…」を再表示）","見出しの「動画で」は何の動画だと思ったか","YouTubeなど無料の動画／有料のオンライン講座の動画／この広告（ABCash）の動画／わからなかった"],
+   ["見出し診断","この見出しは自分に当てはまるか","当てはまる／少し当てはまる／当てはまらない"],
+   ["見出し診断","読んでどう感じたか（1つ）","意味がすぐわかった／2回読んだ／何を言っているかわからない／少し失礼に感じた／特に何も感じない"],
+   ["見出し診断","同じ写真で見出しを変えるなら一番押したいもの（5案は順番ランダム）","お金の話が、自分ごとに変わる60分。／貯金も投資も、なんとなくのままの方へ／学んだお金の知識、使えていますか？／知ってる。でも、できていない。その先へ。／三日坊主でも、いい。学び方から選ぼう。／今のままがいい／どれも押さない"],
+   ["見出し診断","自分ならこう書く（任意）","自由記述"],
+   ["AIっぽさ（4広告の反応をすべて聞いたあと）","今日見た4つの広告の画像は、どうやって作られたと思うか（1つずつ）","人が作ったと思う／たぶん人／たぶんAI／AIで作ったと思う／わからない"],
+   ["AIっぽさ","AIかどうか、ふだん見分けられると思うか","だいたいわかる／ときどきわかる／ほとんどわからない／考えたことがない"],
+   ["AIっぽさ","「AIで作ったな」と感じたとき、タップしたい気持ちは","下がる／少し下がる／変わらない／むしろ上がる／AIだと気づいたことがない"],
+   ["AIっぽさ","AIだと感じる手がかり（2つまで）","顔や肌がきれいすぎる／手や指の描き方／表情や仕草が毎回同じ／背景が単調で作り物っぽい／文字やアプリ画面の違和感／どこかで見た絵柄／なんとなく／見分けがつかない"],
+   ["もらえるもの","「タップすると何がもらえるか」が書いてあることは大事か","とても大事／まあ大事／あまり大事でない／気にしていない"],
+   ["もらえるもの","広告に書いてあると安心なこと（2つまで）","何がもらえるか／どのくらいの量か／何分で見られるか／本当に無料か／あとで勧誘されないか／特にない"],
    ["申し込んだ人のみ","知ったきっかけ／申し込む前に迷ったこと／背中を押したもの／LINE登録後に届いたら進みやすかったもの／動画・資料を見たか","選択式"],
    ["体験会を受けた人のみ","やめようと思ったことは？→それでも参加した理由","選択式"],
    ["申し込んだが行かなかった人のみ","体験会に行かなかったのは、なぜ？（2つまで）","営業されそうで不安になった／予定が合わなくなった／忘れていた／気持ちが冷めた／家族に反対された・相談できなかった／何をするのかわからなくなった／その他"],

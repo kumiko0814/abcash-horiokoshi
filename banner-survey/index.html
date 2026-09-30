@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>お金の広告アンケート（6分）</title>
+<title>お金の広告アンケート（7分）</title>
 <style>
   :root{--bg:#F1F7FB;--panel:#FFFFFF;--ink:#4A4446;--sub:#8A8385;--line:#DCE8F1;--navy:#26405F;--pink:#CF8F9C;--pink-d:#BD7886;--pink-soft:#FBEEF1;--blue:#7FB0D2;--blue-soft:#EAF3FA}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -57,6 +57,13 @@
   .btn.back{flex:0 0 88px;background:var(--panel);color:var(--sub);border:1.5px solid var(--line)}
   .err{color:var(--pink-d);font-size:13px;min-height:1em;margin-top:8px}
   .hl{background:linear-gradient(transparent 60%,var(--pink-soft) 60%)}
+  .mini{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:18px}
+  .mini img{width:104px;flex:0 0 104px;border-radius:8px;display:block}
+  .mini .q{margin:0 0 8px}
+  .mini .chips .opt{font-size:13px;padding:6px 11px}
+  .hlbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:10px 0}
+  .hlbox img{width:100%;display:block}
+  .hlbox .cap{font-size:15px;font-weight:700;color:var(--navy);padding:10px 12px;border-top:1px solid var(--line)}
   .done{text-align:center;padding-top:40px}
   .bug{display:block;text-align:center;font-size:12px;color:var(--sub);margin-top:30px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;width:100%}
 </style>
@@ -79,7 +86,6 @@ var LP={a:"https://www.abcash.co.jp/oBR0NkoC/oHNUWG8v",b:"https://www.abcash.co.
 var HONEST="どれも刺さらない場合でも、率直に答えていただいて失礼には当たりません。直感でお答えください。";
 
 var ADS={
- b1:{imgs:["img/b1.jpg"]},
  b2:{imgs:["img/b2.jpg"]},
  b3:{imgs:["img/b3.jpg"]},
  c1:{imgs:[1,2,3,4,5].map(function(i){return "img/c1_"+i+".jpg";})},
@@ -87,14 +93,15 @@ var ADS={
  c3:{imgs:[1,2,3,4,5,6].map(function(i){return "img/c3_"+i+".jpg";})},
  c4:{imgs:[1,2,3,4].map(function(i){return "img/c4_"+i+".jpg";})}
 };
-var ORDER=["b1","b2","b3","c1","c2","c3","c4"];
-var LINES=[[0,1,3],[1,2,4],[2,3,5],[3,4,6],[4,5,0],[5,6,1],[6,0,2]];
+var FIXED="b2";
+var POOL=["b3","c1","c2","c3","c4"];
+var TRIPLES=[[0,1,2],[0,1,3],[0,1,4],[0,2,3],[0,2,4],[0,3,4],[1,2,3],[1,2,4],[1,3,4],[2,3,4]];
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
-var block=store("abs2_block"); if(block===null){block=String(Math.floor(Math.random()*7));store("abs2_block",block);} block=+block;
-var group=store("abs2_group"); if(group===null){group=Math.random()<0.5?"V":"T";store("abs2_group",group);}
-var shown=ORDER.filter(function(_,i){return LINES[block].indexOf(i)<0;});
+var block=store("abs3_block"); if(block===null){block=String(Math.floor(Math.random()*10));store("abs3_block",block);} block=+block;
+var group=store("abs3_group"); if(group===null){group=Math.random()<0.5?"V":"T";store("abs3_group",group);}
+var shown=[FIXED].concat(TRIPLES[block].map(function(i){return POOL[i];}));
 shown=shown.map(function(v){return [Math.random(),v];}).sort(function(a,b){return a[0]-b[0];}).map(function(x){return x[1];});
-var rid=store("abs2_rid"); if(!rid){rid="r"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);store("abs2_rid",rid);}
+var rid=store("abs3_rid"); if(!rid){rid="r"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);store("abs3_rid",rid);}
 
 var A={};
 var REL=["ABCashに入会した（受講中・卒業）","体験会は受けたが、入会しなかった","体験会に申し込んだが、行かなかった","ABCashは知っているが、申し込んだことはない","ABCashを知らなかった"];
@@ -128,6 +135,12 @@ S.push({kind:"qs",title:"ボタンと中身について",qs:[
 ]});
 S.push({kind:"qs",title:"あなたなら、どんな広告？",qs:[
   {k:"banner_idea",t:"あなたなら、どんなバナー（広告）だったら、ABCashの無料体験会に申し込みたくなりますか？",req:true,note:"絵・写真・言葉・もらえるもの・出てくる人など、何でも大丈夫です。今日見た広告に「こうだったら」でも構いません",type:"text",min:5}
+]});
+S.push({kind:"headline"});
+S.push({kind:"ai"});
+S.push({kind:"qs",title:"もらえるものについて",qs:[
+  {k:"gift_imp",t:"広告をタップするか決めるとき、「タップすると何がもらえるか」が書いてあることは、どのくらい大事ですか？",o:["とても大事","まあ大事","あまり大事でない","気にしていない"],type:"one"},
+  {k:"gift_want",t:"もらえるものについて、広告に書いてあると安心なことは？",note:"2つまで",o:["何がもらえるか","どのくらいの量か","何分で見られるか","本当に無料か","あとで勧誘されないか","特にない"],type:"multi",max:2}
 ]});
 S.push({kind:"qs",title:"申し込んだころのこと",when:applied,qs:[
   {k:"source",t:"ABCashを知ったきっかけは？",o:["Instagram・Facebookの広告","Xの広告","TikTokの広告","YouTube","検索","知人の紹介","覚えていない","その他"],type:"one"},
@@ -172,10 +185,25 @@ var LPQ2=[
   {k:"lp_missing",t:"体験会に申し込むために、足りない情報は？",note:"2つまで",o:["体験会で具体的に何をするか","受講生の実例（期間や変化）","料金の目安","講師の人柄","所要時間・日程","特になし"],type:"multi",max:2},
   {k:"lp_comment",t:"ページについて、ひとことあれば",note:"任意",type:"text",optional:true}
 ];
+var HL_ALT=["お金の話が、自分ごとに変わる60分。","貯金も投資も、なんとなくのままの方へ","学んだお金の知識、使えていますか？","知ってる。でも、できていない。その先へ。","三日坊主でも、いい。学び方から選ぼう。","今のままがいい","どれも押さない"];
+var HLQ=[
+  {k:"hl_video",t:"見出しの「動画で」は、何の動画だと思いましたか？",o:["YouTubeなど無料の動画","有料のオンライン講座の動画","この広告（ABCash）の動画","わからなかった"],type:"one"},
+  {k:"hl_fit",t:function(){return "この見出しは、<span class='hl'>"+you()+"</span>に当てはまりますか？";},o:["当てはまる","少し当てはまる","当てはまらない"],type:"one"},
+  {k:"hl_read",t:"この見出しを読んで、どう感じましたか？",note:"近いもの1つ",o:["意味がすぐわかった","2回読んだ","何を言っているかわからない","少し失礼に感じた","特に何も感じない"],type:"one"},
+  {k:"hl_alt",t:function(){return "同じ写真で見出しを変えるなら、<span class='hl'>"+you()+"</span>が一番押したくなるのはどれ？";},o:HL_ALT,type:"one",shuffle:5},
+  {k:"hl_own",t:"自分ならこう書く、があれば一言どうぞ",note:"任意",type:"text",optional:true}
+];
+var AI_OPT=["人が作ったと思う","たぶん人","たぶんAI","AIで作ったと思う","わからない"];
+var AIQ2=[
+  {k:"ai_can",t:"広告の画像がAIで作られたものかどうか、ふだん見分けられると思いますか？",o:["だいたいわかる","ときどきわかる","ほとんどわからない","考えたことがない"],type:"one"},
+  {k:"ai_attitude",t:"広告を見て「AIで作ったな」と感じたとき、タップしたい気持ちはどう変わりますか？",o:["下がる","少し下がる","変わらない","むしろ上がる","AIだと気づいたことがない"],type:"one"},
+  {k:"ai_cue",t:"「AIで作ったな」と感じるのは、どんなところですか？",note:"2つまで",o:["顔や肌がきれいすぎる","手や指の描き方","表情や仕草が毎回同じ","背景が単調で作り物っぽい","文字やアプリ画面の違和感","どこかで見た絵柄","なんとなく","見分けがつかない"],type:"multi",max:2}
+];
+function aiQs(){return shown.map(function(id){return {k:"ai_"+id,t:"",type:"chips",o:AI_OPT};}).concat(AIQ2);}
 function qHTML(q){
   if(q.show&&!q.show())return "";
   var h='<div class="q">'+txt(q.t)+(q.req?'<span class="req">必須</span>':'')+(q.note?'<small>'+q.note+'</small>':'')+'</div>';
-  if(q.type==="text"){return h+'<textarea data-k="'+q.k+'" placeholder="例：〇〇な人が出てきて、〇〇がわかるなら申し込みたい">'+(A[q.k]||"").replace(/</g,"&lt;")+'</textarea>';}
+  if(q.type==="text"){return h+'<textarea data-k="'+q.k+'" placeholder="'+(q.k==="banner_idea"?"例：〇〇な人が出てきて、〇〇がわかるなら申し込みたい":"")+'">'+(A[q.k]||"").replace(/</g,"&lt;")+'</textarea>';}
   var cls=q.type==="chips"?"chips":"opts";
   h+='<div class="'+cls+'">';
   opts(q).forEach(function(o){
@@ -196,6 +224,8 @@ function curQs(){
   if(s.kind==="split")return [{k:"split_react",type:"one"}];
   if(s.kind==="lpheads")return [LPQ1];
   if(s.kind==="lpbody")return LPQ2;
+  if(s.kind==="headline")return HLQ;
+  if(s.kind==="ai")return aiQs();
   return s.qs||[];
 }
 function render(){
@@ -205,7 +235,7 @@ function render(){
      +'<p class="lead">お金のスクール「ABCash」の広告とページを見て、感じたことを教えてください。ABCashを知らない方も大歓迎です。</p>'
      +'<div class="card">正解はありません。<br>'+HONEST+'<br><br>回答はお名前が分からない形で集計し、これからの広告づくりの参考にします。</div>'
      +(CFG.thanks?'<div class="soft">'+CFG.thanks+'</div>':'')
-     +'<p class="note">所要時間 6〜7分・ほとんどタップで答えられます</p>';
+     +'<p class="note">所要時間 7分ほど・ほとんどタップで答えられます</p>';
   }else if(s.kind==="ad"){
     h='<h1>広告 '+s.n+' / '+shown.length+'</h1>'+(s.n===1?'<div class="soft">'+HONEST+'</div>':'')+adHTML(ADS[s.id].imgs)+adQs(s.id).map(qHTML).join("");
   }else if(s.kind==="pick"){
@@ -230,6 +260,19 @@ function render(){
      +'<div class="scrollbox"><img src="img/lp_full.jpg" alt="ページ全体"></div>'
      +'<p class="note" style="margin-top:8px">スマホで実際に見たい方は <a href="'+LP.a+'" target="_blank" rel="noopener">こちらから開けます ↗</a></p>'
      +LPQ2.map(qHTML).join("");
+  }else if(s.kind==="headline"){
+    h='<h1>この見出しについて</h1>'
+     +'<p class="lead">最初のほうで見た、この広告の見出しについて教えてください。</p>'
+     +'<div class="hlbox"><img src="img/b2.jpg" alt="広告画像"><div class="cap">「動画でお金を学んでも、何も変わらず、諦めたあなたへ。」</div></div>'
+     +HLQ.map(qHTML).join("");
+  }else if(s.kind==="ai"){
+    h='<h1>画像の作られ方について</h1>'
+     +'<p class="lead">今日見た4つの広告の画像は、どうやって作られたと思いますか？　当てるクイズではないので、感じたままで大丈夫です。</p>'
+     +shown.map(function(id,i){
+        var q={k:"ai_"+id,t:"",type:"chips",o:AI_OPT};
+        return '<div class="mini"><img src="'+ADS[id].imgs[0]+'" alt=""><div><div class="q">'+(i+1)+'つ目の広告</div>'+qHTML(q).replace(/^<div class="q"><\/div>/,'')+'</div></div>';
+      }).join("")
+     +AIQ2.map(qHTML).join("");
   }else if(s.kind==="qs"){
     h='<h1>'+s.title+'</h1>'+s.qs.map(qHTML).join("");
   }else if(s.kind==="done"){
@@ -257,7 +300,7 @@ function bind(){
     b.addEventListener("click",function(){
       var k=b.dataset.k,v=b.dataset.v,q=findQ(k);
       if(q.type==="multi"){
-        var arr=(A[k]||[]).slice(),i=arr.indexOf(v),excl=/^(迷わなかった|どれもない|特になし|どれもピンとこない)$/;
+        var arr=(A[k]||[]).slice(),i=arr.indexOf(v),excl=/^(迷わなかった|どれもない|特になし|どれもピンとこない|見分けがつかない|特にない)$/;
         if(i>=0)arr.splice(i,1);
         else if(excl.test(v))arr=[v];
         else{arr=arr.filter(function(x){return !excl.test(x);});if(arr.length>=q.max)arr.shift();arr.push(v);}
@@ -293,7 +336,7 @@ function missing(){
 }
 function send(){
   var clean={};Object.keys(A).forEach(function(k){clean[k]=A[k];});
-  var payload={v:2,rid:rid,block:block,group:group,shown:shown,ua:navigator.userAgent.slice(0,120),at:new Date().toISOString(),answers:clean};
+  var payload={v:3,rid:rid,block:block,group:group,shown:shown,ua:navigator.userAgent.slice(0,120),at:new Date().toISOString(),answers:clean};
   var body={member_id:CFG.memberId,member_name:"回答者",mood:"広告アンケート回答",worry:JSON.stringify(payload),want:location.href.slice(0,180)};
   return fetch(U,{method:"POST",headers:{apikey:K,Authorization:"Bearer "+K,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify(body)});
 }
@@ -302,7 +345,7 @@ document.getElementById("next").addEventListener("click",function(){
   if(m.length){err.textContent=m.indexOf("banner_idea")>=0?"ひとことでも大丈夫なので、ご記入ください（5文字以上）":"まだ選んでいない質問があります";return;}
   if(cur===lastIdx()){
     var btn=this;btn.disabled=true;btn.textContent="送信中…";
-    send().then(function(r){if(!r.ok)throw 0;store("abs2_done","1");cur=S.length-1;render();})
+    send().then(function(r){if(!r.ok)throw 0;store("abs3_done","1");cur=S.length-1;render();})
       .catch(function(){btn.disabled=false;btn.textContent="送信する";err.textContent="送信できませんでした。電波の良い場所でもう一度押してください";});
     return;
   }
