@@ -40,12 +40,6 @@
 </style>
 </head>
 <body>
-<div class="gate" id="gate">
-  <h1>広告アンケート 集計</h1>
-  <input type="password" id="pw" placeholder="パスワード">
-  <button id="go" type="button">開く</button>
-  <p class="sub" id="gerr"></p>
-</div>
 <div class="wrap" id="main" hidden>
   <h1>ABCash 広告アンケート 集計</h1>
   <p class="sub" id="meta"></p>
@@ -65,12 +59,12 @@
   <section class="view" id="v4"></section>
   <section class="view" id="v5"></section>
 </div>
+<script src="https://kumiko0814.github.io/merone-auth/admin-auth.js"></script>
 <script>
 (function(){
 "use strict";
 var U="https://inrvprlyobghviklulcv.supabase.co/rest/v1/ailab_notes";
 var K="sb_publishable_ZrCNcsRHMci-l7Fns8QtIA_X22XZGJp";
-var PW="merone2026";
 var ADS={
  b2:{name:"実写「動画でお金を学んでも…諦めたあなたへ」",img:"img/b2.jpg"},
  b3:{name:"実写「お金のスクールで変われず…」",img:"img/b3.jpg"},
@@ -86,12 +80,9 @@ var sel=document.getElementById("seg");
 [["all","全員"],["applied","申し込んだことがある人（入会・体験会のみ・行かなかった）"],["never","申し込んだことがない人（知っている・知らなかった）"]].concat(REL.map(function(r,i){return ["r"+i,r];})).forEach(function(o){var e=document.createElement("option");e.value=o[0];e.textContent=o[1];sel.appendChild(e);});
 sel.addEventListener("change",function(){SEG=sel.value;draw();});
 
-document.getElementById("go").addEventListener("click",open);
-document.getElementById("pw").addEventListener("keydown",function(e){if(e.key==="Enter")open();});
-function open(){
-  if(document.getElementById("pw").value!==PW){document.getElementById("gerr").textContent="パスワードが違います";return;}
-  document.getElementById("gate").hidden=true;document.getElementById("main").hidden=false;load();
-}
+MeroneAdminAuth.require({url:"https://inrvprlyobghviklulcv.supabase.co",anonKey:K,title:"広告アンケート 集計"}).then(function(){
+  document.getElementById("main").hidden=false;load();
+});
 document.querySelectorAll(".tab").forEach(function(t){t.addEventListener("click",function(){
   document.querySelectorAll(".tab").forEach(function(x){x.classList.toggle("on",x===t);});
   for(var i=0;i<6;i++)document.getElementById("v"+i).classList.toggle("on",String(i)===t.dataset.v);
@@ -112,7 +103,7 @@ function filt(){
     if(SEG==="all")return true; if(SEG==="applied")return i>=0&&i<=2; if(SEG==="never")return i>=3; return "r"+i===SEG;});
 }
 function load(){
-  fetch(U+"?member_id=eq.survey_abcash_banner&select=id,created_at,worry&order=id.asc",{headers:{apikey:K,Authorization:"Bearer "+K}})
+  MeroneAdminAuth.fetch(U+"?member_id=eq.survey_abcash_banner&select=id,created_at,worry&order=id.asc")
    .then(function(r){return r.json();}).then(function(list){
     var seen={};
     list.forEach(function(x){try{var p=JSON.parse(x.worry);if(p.v!==3)return;if(p.answers&&/^TEST/.test(p.answers.banner_idea||""))return;seen[p.rid]=p;}catch(e){}});
